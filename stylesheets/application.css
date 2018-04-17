@@ -42,6 +42,16 @@ li {
   max-height: 500px;
 }
 
+.game {
+  margin: auto auto;
+  max-width: 700px;
+  max-height: 700px;
+}
+
+.game > div {
+  text-align: center;
+}
+
 .red {
   background-color: red;
 }

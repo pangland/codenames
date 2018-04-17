@@ -24603,44 +24603,38 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var Game = function (_React$Component) {
   _inherits(Game, _React$Component);
 
-  function Game() {
+  function Game(props) {
     _classCallCheck(this, Game);
 
-    return _possibleConstructorReturn(this, (Game.__proto__ || Object.getPrototypeOf(Game)).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, (Game.__proto__ || Object.getPrototypeOf(Game)).call(this, props));
+
+    _this.state = {
+      player: Math.random() >= .5 ? "BLUE" : "RED"
+    };
+    return _this;
   }
 
   _createClass(Game, [{
-    key: 'render',
-
-    // shuffleArray(arr) {
-    //   arr.forEach((el, i) => {
-    //     const j = Math.floor(Math.random() * (i + 1));
-    //     [arr[i], arr[j]] = [arr[j], arr[i]];
-    //   });
-    //
-    //   return arr;
-    // }
-
-    value: function render() {
-      var player = void 0;
-
-      if (Math.random() >= .5) {
-        player = "BLUE";
-      } else {
-        player = "RED";
+    key: 'swapPlayer',
+    value: function swapPlayer() {
+      if (this.state.player === "BLUE") {
+        this.setState({ player: "RED" });
       }
-
-      var prompt = player + '\'S TURN';
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var prompt = this.state.player + '\'S TURN';
 
       return _react2.default.createElement(
         'div',
-        null,
+        { className: 'game' },
         _react2.default.createElement(
-          'span',
+          'div',
           null,
           prompt
         ),
-        _react2.default.createElement(_board2.default, { player: player })
+        _react2.default.createElement(_board2.default, { player: this.state.player })
       );
     }
   }]);
