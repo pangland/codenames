@@ -24,7 +24,24 @@ li {
   list-style-type: none;
 }
 
+.beige {
+  background-color: beige;
+}
+
+.black {
+  background-color: black;
+  color: white;
+}
+
+.blue {
+  background-color: blue;
+}
+
 .board {
   max-width: 700px;
   max-height: 500px;
+}
+
+.red {
+  background-color: red;
 }
