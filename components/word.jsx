@@ -14,6 +14,7 @@ class Word extends React.Component {
   selectCard() {
     if (!this.state.selected) {
       this.setState({ selected: true });
+      this.props.handleSelection(this.props.cardType);
     }
   }
 

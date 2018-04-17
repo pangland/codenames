@@ -24608,18 +24608,30 @@ var Game = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (Game.__proto__ || Object.getPrototypeOf(Game)).call(this, props));
 
+    _this.handleSelection = _this.handleSelection.bind(_this);
+
     _this.state = {
-      player: Math.random() >= .5 ? "BLUE" : "RED"
+      player: Math.random() >= .5 ? "BLUE" : "RED",
+      gameOver: false
     };
     return _this;
   }
 
   _createClass(Game, [{
+    key: 'handleSelection',
+    value: function handleSelection(cardType) {
+      if (cardType === 3) {
+        this.setState({ gameOver: true });
+      } else if (this.state.player === "BLUE" && cardType !== 0) {
+        this.swapPlayer();
+      } else if (this.state.player === "RED" && cardType !== 1) {
+        this.swapPlayer();
+      }
+    }
+  }, {
     key: 'swapPlayer',
     value: function swapPlayer() {
-      if (this.state.player === "BLUE") {
-        this.setState({ player: "RED" });
-      }
+      this.setState({ player: this.state.player === "BLUE" ? "RED" : "BLUE" });
     }
   }, {
     key: 'render',
@@ -24634,7 +24646,9 @@ var Game = function (_React$Component) {
           null,
           prompt
         ),
-        _react2.default.createElement(_board2.default, { player: this.state.player })
+        _react2.default.createElement(_board2.default, {
+          player: this.state.player,
+          handleSelection: this.handleSelection })
       );
     }
   }]);
@@ -24690,6 +24704,7 @@ var Word = function (_React$Component) {
     value: function selectCard() {
       if (!this.state.selected) {
         this.setState({ selected: true });
+        this.props.handleSelection(this.props.cardType);
       }
     }
   }, {
@@ -24744,10 +24759,26 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var Board = function (_React$Component) {
   _inherits(Board, _React$Component);
 
-  function Board() {
+  function Board(props) {
     _classCallCheck(this, Board);
 
-    return _possibleConstructorReturn(this, (Board.__proto__ || Object.getPrototypeOf(Board)).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, (Board.__proto__ || Object.getPrototypeOf(Board)).call(this, props));
+
+    var wordStatuses = [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 3];
+
+    wordStatuses.push(_this.props.player === "BLUE" ? 0 : 1);
+    _this.shuffleArray(wordStatuses);
+
+    var dictionary = _this.shuffleArray(['a', 'b', 'c', 'a', 'b', 'c', 'a', 'b', 'c', 'a', 'b', 'c', 'a', 'b', 'c', 'a', 'b', 'c', 'a', 'b', 'c', 'a', 'b', 'c', 'a']);
+
+    _this.wordList = dictionary.map(function (entry, i) {
+      return _react2.default.createElement(_word2.default, {
+        key: i,
+        word: entry,
+        cardType: wordStatuses[i],
+        handleSelection: _this.props.handleSelection });
+    });
+    return _this;
   }
 
   _createClass(Board, [{
@@ -24765,21 +24796,10 @@ var Board = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      var wordStatuses = [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 3];
-
-      wordStatuses.push(this.props.player === "BLUE" ? 0 : 1);
-      this.shuffleArray(wordStatuses);
-
-      var dictionary = this.shuffleArray(['a', 'b', 'c', 'a', 'b', 'c', 'a', 'b', 'c', 'a', 'b', 'c', 'a', 'b', 'c', 'a', 'b', 'c', 'a', 'b', 'c', 'a', 'b', 'c', 'a']);
-
-      var wordList = dictionary.map(function (entry, i) {
-        return _react2.default.createElement(_word2.default, { key: i, word: entry, cardType: wordStatuses[i] });
-      });
-
       return _react2.default.createElement(
         'ul',
         { className: 'board' },
-        wordList
+        this.wordList
       );
     }
   }]);
