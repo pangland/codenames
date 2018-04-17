@@ -1,0 +1,30 @@
+ul {
+  margin: auto auto;
+  display: flex;
+  flex-wrap: wrap;
+  box-sizing: border-box;
+  /*flex-direction: row;*/
+  /*align-items: space-around;*/
+  /*justify-content: space-around;*/
+}
+
+li {
+  /*flex-basis: 100%;*/
+  border: 1px solid black;
+  box-sizing: border-box;
+  width: 18%;
+  padding: 5% 0 5% 0;
+  margin: 1%;
+  text-align: center;
+  background-color: gray;
+  /*height: 20%;*/
+  /*padding: 5% 10% 5% 10%;*/
+  /*flex: 1;*/
+
+  list-style-type: none;
+}
+
+.board {
+  max-width: 700px;
+  max-height: 500px;
+}
