@@ -16,7 +16,8 @@ class Game extends React.Component {
 
   handleSelection(cardType) {
     if (cardType === 3) {
-      this.setState({ gameOver: true });
+      this.setState( {gameOver: true} );
+      this.swapPlayer();
     } else if (this.state.player === "BLUE" && cardType !== 0) {
       this.swapPlayer();
     } else if (this.state.player === "RED" && cardType !== 1) {
@@ -29,7 +30,9 @@ class Game extends React.Component {
   }
 
   render() {
-    const prompt = `${this.state.player}'S TURN`;
+    const {player, gameOver} = this.state;
+
+    const prompt = gameOver ? `${player} IS VICTORIOUS` : `${player}'S TURN`;
 
     return (
       <div className="game">

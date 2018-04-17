@@ -24622,6 +24622,7 @@ var Game = function (_React$Component) {
     value: function handleSelection(cardType) {
       if (cardType === 3) {
         this.setState({ gameOver: true });
+        this.swapPlayer();
       } else if (this.state.player === "BLUE" && cardType !== 0) {
         this.swapPlayer();
       } else if (this.state.player === "RED" && cardType !== 1) {
@@ -24636,7 +24637,12 @@ var Game = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      var prompt = this.state.player + '\'S TURN';
+      var _state = this.state,
+          player = _state.player,
+          gameOver = _state.gameOver;
+
+
+      var prompt = gameOver ? player + ' IS VICTORIOUS' : player + '\'S TURN';
 
       return _react2.default.createElement(
         'div',
