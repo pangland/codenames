@@ -7406,9 +7406,9 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouterDom = __webpack_require__(33);
 
-var _board = __webpack_require__(76);
+var _game = __webpack_require__(74);
 
-var _board2 = _interopRequireDefault(_board);
+var _game2 = _interopRequireDefault(_game);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -7419,7 +7419,7 @@ var App = function App() {
   return _react2.default.createElement(
     'div',
     null,
-    _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', component: _board2.default })
+    _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', component: _game2.default })
   );
 };
 
@@ -24568,7 +24568,89 @@ function camelize(string) {
 module.exports = camelize;
 
 /***/ }),
-/* 74 */,
+/* 74 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _word = __webpack_require__(75);
+
+var _word2 = _interopRequireDefault(_word);
+
+var _board = __webpack_require__(76);
+
+var _board2 = _interopRequireDefault(_board);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Game = function (_React$Component) {
+  _inherits(Game, _React$Component);
+
+  function Game() {
+    _classCallCheck(this, Game);
+
+    return _possibleConstructorReturn(this, (Game.__proto__ || Object.getPrototypeOf(Game)).apply(this, arguments));
+  }
+
+  _createClass(Game, [{
+    key: 'render',
+
+    // shuffleArray(arr) {
+    //   arr.forEach((el, i) => {
+    //     const j = Math.floor(Math.random() * (i + 1));
+    //     [arr[i], arr[j]] = [arr[j], arr[i]];
+    //   });
+    //
+    //   return arr;
+    // }
+
+    value: function render() {
+      var player = void 0;
+
+      if (Math.random() >= .5) {
+        player = "BLUE";
+      } else {
+        player = "RED";
+      }
+
+      var prompt = player + '\'S TURN';
+
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(
+          'span',
+          null,
+          prompt
+        ),
+        _react2.default.createElement(_board2.default, { player: player })
+      );
+    }
+  }]);
+
+  return Game;
+}(_react2.default.Component);
+
+exports.default = Game;
+
+/***/ }),
 /* 75 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -24612,19 +24694,14 @@ var Word = function (_React$Component) {
   _createClass(Word, [{
     key: 'selectCard',
     value: function selectCard() {
-      this.setState({ selected: true });
+      if (!this.state.selected) {
+        this.setState({ selected: true });
+      }
     }
   }, {
     key: 'render',
     value: function render() {
-      var code = { 2: 'beige', 3: 'black' };
-      if (this.props.first === "blue") {
-        code[0] = "blue";
-        code[1] = "red";
-      } else {
-        code[0] = "red";
-        code[1] = "blue";
-      }
+      var code = { 0: 'blue', 1: 'red', 2: 'beige', 3: 'black' };
 
       var className = this.state.selected ? code[this.props.cardType] : "";
 
@@ -24694,12 +24771,15 @@ var Board = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      var wordStatuses = this.shuffleArray([0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 3]);
+      var wordStatuses = [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 3];
+
+      wordStatuses.push(this.props.player === "BLUE" ? 0 : 1);
+      this.shuffleArray(wordStatuses);
 
       var dictionary = this.shuffleArray(['a', 'b', 'c', 'a', 'b', 'c', 'a', 'b', 'c', 'a', 'b', 'c', 'a', 'b', 'c', 'a', 'b', 'c', 'a', 'b', 'c', 'a', 'b', 'c', 'a']);
 
       var wordList = dictionary.map(function (entry, i) {
-        return _react2.default.createElement(_word2.default, { key: i, word: entry, cardType: wordStatuses[i], first: 'blue' });
+        return _react2.default.createElement(_word2.default, { key: i, word: entry, cardType: wordStatuses[i] });
       });
 
       return _react2.default.createElement(

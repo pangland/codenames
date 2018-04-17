@@ -12,10 +12,13 @@ class Board extends React.Component {
   }
 
   render() {
-    const wordStatuses = this.shuffleArray([
-      0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2,
+    const wordStatuses = [
+      0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2,
       2, 2, 3
-    ]);
+    ];
+
+    wordStatuses.push(this.props.player === "BLUE" ? 0 : 1);
+    this.shuffleArray(wordStatuses);
 
     const dictionary = this.shuffleArray([
       'a', 'b', 'c', 'a', 'b', 'c', 'a', 'b', 'c', 'a', 'b', 'c', 'a',
@@ -24,7 +27,7 @@ class Board extends React.Component {
 
     const wordList = dictionary.map((entry, i) => {
       return (
-        <Word key={i} word={entry} cardType={wordStatuses[i]} first="blue" />
+        <Word key={i} word={entry} cardType={wordStatuses[i]} />
       );
     });
 
