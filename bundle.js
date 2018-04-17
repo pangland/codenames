@@ -24606,9 +24606,23 @@ var Game = function (_React$Component) {
   }
 
   _createClass(Game, [{
+    key: 'shuffleArray',
+    value: function shuffleArray(arr) {
+      arr.forEach(function (el, i) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var _ref = [arr[j], arr[i]];
+        arr[i] = _ref[0];
+        arr[j] = _ref[1];
+      });
+
+      return arr;
+    }
+  }, {
     key: 'render',
     value: function render() {
-      var dictionary = ['a', 'b', 'c', 'a', 'b', 'c', 'a', 'b', 'c', 'a', 'b', 'c', 'a', 'b', 'c', 'a', 'b', 'c', 'a', 'b', 'c', 'a', 'b', 'c', 'a'];
+      var wordStatuses = this.shuffleArray([0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3]);
+
+      var dictionary = this.shuffleArray(['a', 'b', 'c', 'a', 'b', 'c', 'a', 'b', 'c', 'a', 'b', 'c', 'a', 'b', 'c', 'a', 'b', 'c', 'a', 'b', 'c', 'a', 'b', 'c', 'a']);
 
       var wordList = dictionary.map(function (entry, i) {
         return _react2.default.createElement(_word2.default, { key: i, word: entry });
