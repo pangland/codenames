@@ -7,6 +7,7 @@ class Game extends React.Component {
     super(props);
 
     this.handleSelection = this.handleSelection.bind(this);
+    this.handleNewBoard = this.handleNewBoard.bind(this);
 
     this.state = {
       player: Math.random() >= .5 ? "BLUE" : "RED",
@@ -25,6 +26,9 @@ class Game extends React.Component {
     }
   }
 
+  handleNewBoard() {
+  }
+
   swapPlayer() {
     this.setState({ player: this.state.player === "BLUE" ? "RED" : "BLUE" });
   }
@@ -40,6 +44,7 @@ class Game extends React.Component {
         <Board
           player={this.state.player}
           handleSelection={this.handleSelection} />
+        <div onClick={this.handleNewBoard}></div>
       </div>
     );
   }

@@ -24609,6 +24609,7 @@ var Game = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (Game.__proto__ || Object.getPrototypeOf(Game)).call(this, props));
 
     _this.handleSelection = _this.handleSelection.bind(_this);
+    _this.handleNewBoard = _this.handleNewBoard.bind(_this);
 
     _this.state = {
       player: Math.random() >= .5 ? "BLUE" : "RED",
@@ -24629,6 +24630,9 @@ var Game = function (_React$Component) {
         this.swapPlayer();
       }
     }
+  }, {
+    key: 'handleNewBoard',
+    value: function handleNewBoard() {}
   }, {
     key: 'swapPlayer',
     value: function swapPlayer() {
@@ -24654,7 +24658,8 @@ var Game = function (_React$Component) {
         ),
         _react2.default.createElement(_board2.default, {
           player: this.state.player,
-          handleSelection: this.handleSelection })
+          handleSelection: this.handleSelection }),
+        _react2.default.createElement('div', { onClick: this.handleNewBoard })
       );
     }
   }]);
