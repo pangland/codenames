@@ -27,6 +27,18 @@ class Board extends React.Component {
           handleSelection={this.props.handleSelection} />
       );
     });
+
+    // const lobbiesRef = fire.database().ref('lobbies');
+    // lobbiesRef.child(this.state.value).once('value', (snapshot) => {
+    //   if (snapshot.exists()) {
+    //     alert('exists');
+    //   } else {
+    //     const newLobby = lobbiesRef.child(this.state.value);
+    //     newLobby.set({ 'permanentLobby': true });
+    //     const path = `/${this.state.value}`;
+    //     this.props.history.push(path);
+    //   }
+    // });
   }
 
   shuffleArray(arr) {

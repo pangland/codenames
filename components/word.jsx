@@ -1,4 +1,5 @@
 import React from 'react';
+import fire from '../firebase';
 
 class Word extends React.Component {
   constructor(props) {
@@ -9,6 +10,18 @@ class Word extends React.Component {
     this.state = {
       selected: false
     };
+  }
+
+  componentDidMount() {
+    const itemsRef = fire.database().ref('cards');
+    itemsRef.on('value', (snapshot) => {
+    let items = snapshot.val();
+    let newState = [];
+
+    this.setState({
+      items: newState
+    });
+  });
   }
 
   selectCard() {
