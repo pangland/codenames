@@ -1,5 +1,4 @@
 import React from 'react';
-import Word from './word';
 import Board from './board';
 
 class Game extends React.Component {
