@@ -15,19 +15,41 @@ class Word extends React.Component {
   componentDidMount() {
     const itemsRef = fire.database().ref('cards');
     itemsRef.on('value', (snapshot) => {
-    let items = snapshot.val();
-    let newState = [];
+      let items = snapshot.val();
+      let newState = [];
 
-    this.setState({
-      items: newState
+      this.isShitWorking();
+
+      this.setState({
+        items: newState
+      });
     });
-  });
+  }
+
+  isShitWorking() {
+    debugger;
+    console.log('yo');
   }
 
   selectCard() {
     if (!this.state.selected) {
       this.setState({ selected: true });
       this.props.handleSelection(this.props.cardType);
+
+      // const cardRef = fire.databse().ref('')
+
+
+          // const lobbiesRef = fire.database().ref('lobbies');
+          // lobbiesRef.child(this.state.value).once('value', (snapshot) => {
+          //   if (snapshot.exists()) {
+          //     alert('exists');
+          //   } else {
+          //     const newLobby = lobbiesRef.child(this.state.value);
+          //     newLobby.set({ 'permanentLobby': true });
+          //     const path = `/${this.state.value}`;
+          //     this.props.history.push(path);
+          //   }
+          // });
     }
   }
 

@@ -1,5 +1,7 @@
 import React from 'react';
 import Word from './word';
+import { History, withRouter } from 'react-router-dom';
+import fire from '../firebase';
 
 class Board extends React.Component {
   constructor(props) {
@@ -14,8 +16,11 @@ class Board extends React.Component {
     this.shuffleArray(wordStatuses);
 
     const dictionary = this.shuffleArray([
-      'a', 'b', 'c', 'a', 'b', 'c', 'a', 'b', 'c', 'a', 'b', 'c', 'a',
-      'b', 'c', 'a', 'b', 'c', 'a', 'b', 'c', 'a', 'b', 'c', 'a'
+      'alamo', 'beagles', 'cyan', 'delta', 'elephant', 'fountain',
+      'ghoul', 'hipster', 'illegitimate', 'junction', 'Klingon',
+      'lemon', 'Madagascar', 'novice', 'operation', 'prinicpal',
+      'query', 'rewind', 'saturation', 'testicle', 'underwater',
+      'villain', 'water', 'xylaphone', 'yankees'
     ]);
 
     this.wordList = dictionary.map((entry, i) => {
@@ -28,6 +33,17 @@ class Board extends React.Component {
       );
     });
 
+    const lobbyWordsPath = "lobbies" + this.props.location.pathname;
+
+    const lobbyWordList = fire.database().ref(lobbyWordsPath);
+
+    lobbyWordList.once("value", (snapshot) => {
+      // console.log(snapshot.val());
+      // snapshot.val().wordList
+    });
+
+    // const.database().ref()
+
     // const lobbiesRef = fire.database().ref('lobbies');
     // lobbiesRef.child(this.state.value).once('value', (snapshot) => {
     //   if (snapshot.exists()) {
@@ -39,6 +55,8 @@ class Board extends React.Component {
     //     this.props.history.push(path);
     //   }
     // });
+
+    debugger;
   }
 
   shuffleArray(arr) {
@@ -59,4 +77,4 @@ class Board extends React.Component {
   }
 }
 
-export default Board;
+export default withRouter(Board);
