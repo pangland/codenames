@@ -32,16 +32,11 @@ class Board extends React.Component {
       return acc;
     }, {});
 
-    // debugger;
-
     lobbyWordList.once("value", (snapshot) => {
       console.log('Event 2');
       Object.assign(allWords, snapshot.val(), dictionaryObj);
 
-      // debugger;
       const wordss = this.shuffleArray(Object.keys(allWords)).slice(0,25);
-
-      // debugger;
 
       this.wordList = wordss.map((entry, i) => {
         return (
@@ -53,10 +48,7 @@ class Board extends React.Component {
         );
       });
 
-      // debugger;
-      this.setState({ active: true });
-      // console.log(snapshot.val());
-      // snapshot.val().wordList
+      this.setState({ active: 0 });
     });
     // const dictionary = this.shuffleArray([
     //   'alamo', 'beagles', 'cyan', 'delta', 'elephant', 'fountain',
@@ -65,34 +57,6 @@ class Board extends React.Component {
     //   'query', 'rewind', 'saturation', 'testicle', 'underwater',
     //   'villain', 'water', 'xylaphone', 'yankees'
     // ]);
-
-    // this.wordList = dictionary.map((entry, i) => {
-    //   return (
-    //     <Word
-    //       key={i}
-    //       word={entry}
-    //       cardType={wordStatuses[i]}
-    //       handleSelection={this.props.handleSelection} />
-    //   );
-    // });
-
-
-    // const.database().ref()
-
-    // const lobbiesRef = fire.database().ref('lobbies');
-    // lobbiesRef.child(this.state.value).once('value', (snapshot) => {
-    //   if (snapshot.exists()) {
-    //     alert('exists');
-    //   } else {
-    //     const newLobby = lobbiesRef.child(this.state.value);
-    //     newLobby.set({ 'permanentLobby': true });
-    //     const path = `/${this.state.value}`;
-    //     this.props.history.push(path);
-    //   }
-    // });
-
-    // console.log('event 1');
-    // debugger;
   }
 
   shuffleArray(arr) {
