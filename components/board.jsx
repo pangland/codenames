@@ -15,32 +15,67 @@ class Board extends React.Component {
     wordStatuses.push(this.props.player === "BLUE" ? 0 : 1);
     this.shuffleArray(wordStatuses);
 
-    const dictionary = this.shuffleArray([
+    const lobbyWordsPath = "lobbies" + this.props.location.pathname + "/lobbyWordList";
+    const lobbyWordList = fire.database().ref(lobbyWordsPath);
+    const allWords = {};
+
+    const dictionary = [
       'alamo', 'beagles', 'cyan', 'delta', 'elephant', 'fountain',
       'ghoul', 'hipster', 'illegitimate', 'junction', 'Klingon',
       'lemon', 'Madagascar', 'novice', 'operation', 'prinicpal',
       'query', 'rewind', 'saturation', 'testicle', 'underwater',
       'villain', 'water', 'xylaphone', 'yankees'
-    ]);
+    ];
 
-    this.wordList = dictionary.map((entry, i) => {
-      return (
-        <Word
-          key={i}
-          word={entry}
-          cardType={wordStatuses[i]}
-          handleSelection={this.props.handleSelection} />
-      );
-    });
+    const dictionaryObj = dictionary.reduce((acc, cur) => {
+      acc[cur] = true;
+      return acc;
+    }, {});
 
-    const lobbyWordsPath = "lobbies" + this.props.location.pathname;
-
-    const lobbyWordList = fire.database().ref(lobbyWordsPath);
+    // debugger;
 
     lobbyWordList.once("value", (snapshot) => {
+      console.log('Event 2');
+      Object.assign(allWords, snapshot.val(), dictionaryObj);
+
+      // debugger;
+      const wordss = this.shuffleArray(Object.keys(allWords)).slice(0,25);
+
+      // debugger;
+
+      this.wordList = wordss.map((entry, i) => {
+        return (
+          <Word
+            key={i}
+            word={entry}
+            cardType={wordStatuses[i]}
+            handleSelection={this.props.handleSelection} />
+        );
+      });
+
+      // debugger;
+      this.setState({ active: true });
       // console.log(snapshot.val());
       // snapshot.val().wordList
     });
+    // const dictionary = this.shuffleArray([
+    //   'alamo', 'beagles', 'cyan', 'delta', 'elephant', 'fountain',
+    //   'ghoul', 'hipster', 'illegitimate', 'junction', 'Klingon',
+    //   'lemon', 'Madagascar', 'novice', 'operation', 'prinicpal',
+    //   'query', 'rewind', 'saturation', 'testicle', 'underwater',
+    //   'villain', 'water', 'xylaphone', 'yankees'
+    // ]);
+
+    // this.wordList = dictionary.map((entry, i) => {
+    //   return (
+    //     <Word
+    //       key={i}
+    //       word={entry}
+    //       cardType={wordStatuses[i]}
+    //       handleSelection={this.props.handleSelection} />
+    //   );
+    // });
+
 
     // const.database().ref()
 
@@ -56,7 +91,8 @@ class Board extends React.Component {
     //   }
     // });
 
-    debugger;
+    // console.log('event 1');
+    // debugger;
   }
 
   shuffleArray(arr) {
@@ -69,9 +105,14 @@ class Board extends React.Component {
   }
 
   render() {
+    const blankBoard = [];
+    for (let i = 0; i < 25; i++) {
+      blankBoard.push(<li className="hidden">blah</li>);
+    }
+
     return (
       <ul className="board">
-        {this.wordList}
+        {this.wordList ? this.wordList : blankBoard}
       </ul>
     );
   }

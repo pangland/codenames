@@ -27,7 +27,7 @@ class Word extends React.Component {
   }
 
   isShitWorking() {
-    debugger;
+    // debugger;
     console.log('yo');
   }
 

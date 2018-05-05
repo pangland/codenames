@@ -40,27 +40,15 @@ class Game extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
 
-    const lobbyWordsPath = "lobbies" + this.props.location.pathname;
-    const lobbyWordList = fire.database().ref(lobbyWordsPath);
+    const lobbyPath = "lobbies" + this.props.location.pathname;
+    const currentLobby = fire.database().ref(lobbyPath);
 
-    lobbyWordList.once('value', (snapshot) => {
-      const wordList = lobbyWordList.child('lobbyWordList');
-
-      // var newUserRef = l.push();
-      // newUserRef.set({ 'name': 'fred', 'age': '32' });
+    currentLobby.once('value', (snapshot) => {
+      const wordList = currentLobby.child('lobbyWordList');
 
       wordList.update({ [this.state.value]: true });
-      // lobbyWordList.child('lobbyWordList').push({
-      //   [this.state.value]: true
-      // });
-      // lobbyWordList.set({ [blah]: true });
       this.setState({ value: ''});
     });
-
-    // const newLobby = lobbiesRef.child(this.state.value);
-    // newLobby.set({ 'permanentLobby': true });
-    // const path = `/${this.state.value}`;
-    // this.props.history.push(path);
   }
 
   swapPlayer() {
@@ -81,8 +69,13 @@ class Game extends React.Component {
         <div onClick={this.handleNewBoard}></div>
 
         <form onSubmit={this.handleSubmit}>
-          <input type="text" value={this.state.value} onChange={this.handleChange} />
-          <input type="submit" value="Create Room" />
+          <input
+            type="text"
+            pattern="[A-Za-z]+"
+            value={this.state.value}
+            onChange={this.handleChange}
+            title="Please only use numbers and letters" />
+          <input type="submit" value="Add Word" />
         </form>
       </div>
     );
