@@ -2,6 +2,7 @@ import React from 'react';
 import Word from './word';
 import Board from './board';
 import fire from '../firebase';
+import { History, withRouter } from 'react-router-dom';
 
 class Game extends React.Component {
   constructor(props) {
@@ -56,6 +57,7 @@ class Game extends React.Component {
   }
 
   render() {
+    console.log('rerender game');
     const {player, gameOver} = this.state;
 
     const prompt = gameOver ? `${player} IS VICTORIOUS` : `${player}'S TURN`;
@@ -82,4 +84,4 @@ class Game extends React.Component {
   }
 }
 
-export default Game;
+export default withRouter(Game);

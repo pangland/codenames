@@ -1,6 +1,7 @@
 import React from 'react';
 import fire from '../firebase';
 import { Link } from 'react-router-dom';
+import { History, withRouter } from 'react-router-dom';
 
 class Homepage extends React.Component {
   constructor(props) {
@@ -54,4 +55,4 @@ class Homepage extends React.Component {
   }
 }
 
-export default Homepage;
+export default withRouter(Homepage);

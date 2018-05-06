@@ -1,59 +1,44 @@
 import React from 'react';
 import fire from '../firebase';
+import { History, withRouter } from 'react-router-dom';
 
 class Word extends React.Component {
   constructor(props) {
+    debugger;
     super(props);
-
     this.selectCard = this.selectCard.bind(this);
-
     this.state = {
-      selected: false
+      selected: this.props.selected
     };
   }
 
   componentDidMount() {
-    const itemsRef = fire.database().ref('cards');
-    itemsRef.on('value', (snapshot) => {
-      let items = snapshot.val();
-      let newState = [];
-
-      this.isShitWorking();
-
+    const path = "lobbies" + this.props.location.pathname + "/board/" + this.props.index;
+    const cardRef = fire.database().ref(path);
+    cardRef.on('value', (snapshot) => {
+      debugger;
       this.setState({
-        items: newState
+        selected: snapshot.val().selected
       });
     });
   }
 
-  isShitWorking() {
-    // debugger;
-    console.log('yo');
-  }
-
   selectCard() {
     if (!this.state.selected) {
+      const path = "lobbies" + this.props.location.pathname + "/board/" + this.props.index;
+      const cardRef = fire.database().ref(path);
+
+      cardRef.update({
+        selected: true
+      });
+
       this.setState({ selected: true });
       this.props.handleSelection(this.props.cardType);
-
-      // const cardRef = fire.databse().ref('')
-
-
-          // const lobbiesRef = fire.database().ref('lobbies');
-          // lobbiesRef.child(this.state.value).once('value', (snapshot) => {
-          //   if (snapshot.exists()) {
-          //     alert('exists');
-          //   } else {
-          //     const newLobby = lobbiesRef.child(this.state.value);
-          //     newLobby.set({ 'permanentLobby': true });
-          //     const path = `/${this.state.value}`;
-          //     this.props.history.push(path);
-          //   }
-          // });
     }
   }
 
   render() {
+    debugger;
     const code = {0: 'blue', 1: 'red', 2: 'beige', 3: 'black'};
 
     const className = this.state.selected ? code[this.props.cardType] : "";
@@ -66,4 +51,4 @@ class Word extends React.Component {
   }
 }
 
-export default Word;
+export default withRouter(Word);
