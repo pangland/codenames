@@ -7,8 +7,6 @@ import { uniqueId } from './util';
 class Board extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
-
     const lobby = this.props.location.pathname;
     const boardRef = fire.database().ref("lobbies" + lobby + "/board");
 
@@ -17,7 +15,7 @@ class Board extends React.Component {
     };
 
     boardRef.once("value", (snapshot) => {
-      if (!snapshot.exists()) {
+      if (!snapshot.exists() || this.props.newBoard) {
         this.newBoard();
       } else {
         this.renderFirebaseBoard(snapshot);
@@ -26,14 +24,16 @@ class Board extends React.Component {
   }
 
   componentDidMount() {
-    const boardRef = fire.database().ref("lobbies" + this.props.location.pathname).child('board');
-    boardRef.on("value", (snapshot) => {
-      this.renderFirebaseBoard(snapshot);
-    });
+    this.props.onRef(this);
+  }
+
+  componentWillUnmount() {
+    this.props.onRef(undefined);
   }
 
   componentWillReceiveProps(nextProps) {
-    // debugger;
+    console.log('Will Receive Props');
+    debugger;
     if (this.state.lobby !== nextProps.location.pathname) {
       const lobby = nextProps.location.pathname;
       const boardRef = fire.database().ref("lobbies" + lobby + "/board");
@@ -52,6 +52,7 @@ class Board extends React.Component {
 
   renderFirebaseBoard(snapshot) {
     const data = snapshot.val();
+    console.log(data[0]);
     const wordList = [];
     for (let i = 0; i < 25; i++) {
       wordList.push(
@@ -70,14 +71,8 @@ class Board extends React.Component {
     });
   }
 
-  // static getDerivedStateFromProps(nextProps, prevState) {
-  //   debugger;
-  //   this.setState({
-  //     lobby: this.props.location.pathname
-  //   });
-  // }
-
   newBoard() {
+    debugger;
     const wordStatuses = [
       0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2,
       2, 2, 3
@@ -155,7 +150,7 @@ class Board extends React.Component {
   }
 
   render() {
-    // debugger;
+    debugger;
 
     const blankBoard = [];
     for (let i = 0; i < 25; i++) {
