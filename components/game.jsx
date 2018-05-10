@@ -14,6 +14,7 @@ class Game extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.newStartingConditions = this.newStartingConditions.bind(this);
     this.triggerNewBoard = this.triggerNewBoard.bind(this);
+    this.spymasterToggle = this.spymasterToggle.bind(this);
 
     const lobby = this.props.location.pathname;
     this.lobbyRef = fire.database().ref("lobbies" + lobby);
@@ -31,17 +32,18 @@ class Game extends React.Component {
     this.state.value = "";
   }
 
-  // componentDidMount() {
-  //   const path = "lobbies" + this.props.location.pathname;
-  //   const lobbyRef = fire.database().ref(path);
-  //   lobbyRef.on('value', (snapshot) => {
-  //     this.setState({
-  //       player: snapshot.val().player,
-  //       blueLeft: snapshot.val().blueLeft,
-  //       redLeft: snapshot.val().redLeft
-  //     });
-  //   });
-  // }
+  componentDidMount() {
+    const path = "lobbies" + this.props.location.pathname;
+    const lobbyRef = fire.database().ref(path);
+    lobbyRef.on('value', (snapshot) => {
+      this.setState({
+        player: snapshot.val().player,
+        blueLeft: snapshot.val().blueLeft,
+        redLeft: snapshot.val().redLeft,
+        gameOver: snapshot.val().gameOver
+      });
+    });
+  }
 
   componentWillReceiveProps(nextProps) {
     // const lobby = this.props.location.pathname;
@@ -62,7 +64,7 @@ class Game extends React.Component {
     this.setState({
       redLeft: snapshot.val().redLeft,
       blueLeft: snapshot.val().blueLeft,
-      player: snapshot.val().currentPlayer,
+      player: snapshot.val().player,
       gameOver: snapshot.val().gameOver
     });
   }
@@ -72,6 +74,8 @@ class Game extends React.Component {
     console.log('THE PLAYER IS:' + player);
     const redLeft = player === "BLUE" ? 8 : 9;
     const blueLeft = player  === "BLUE" ? 9 : 8;
+
+    this.board.setPlayer(player);
 
     this.lobbyRef.update({
       player: player,
@@ -84,7 +88,9 @@ class Game extends React.Component {
       player: player,
       blueLeft: blueLeft,
       redLeft: redLeft,
-      gameOver: false
+      gameOver: false,
+      isSpymaster: false,
+      board: <Board onRef={ref => (this.board = ref)} player={player} handleSelection={this.handleSelection} />
     });
   }
 
@@ -125,7 +131,7 @@ class Game extends React.Component {
     currentLobby.once('value', (snapshot) => {
       const wordList = currentLobby.child('lobbyWordList');
 
-      wordList.update({ [this.state.value]: true });
+      wordList.update({ [this.state.value.toUpperCase()]: true });
       this.setState({ value: ''});
     });
   }
@@ -133,14 +139,19 @@ class Game extends React.Component {
   swapPlayer() {
     // const path = "lobbies" + this.props.location.pathname;
     // const lobbyRef = fire.database().ref(path);
-    this.lobbyRef.update({currentPlayer: this.state.player === "BLUE" ? "RED" : "BLUE"});
-    this.setState({ player: this.state.player === "BLUE" ? "RED" : "BLUE" });
+    if (!this.state.gameOver) {
+      this.lobbyRef.update({player: this.state.player === "BLUE" ? "RED" : "BLUE"});
+      this.setState({ player: this.state.player === "BLUE" ? "RED" : "BLUE" });
+    }
   }
 
   triggerNewBoard() {
-    // debugger;
     this.newStartingConditions();
     this.board.newBoard();
+  }
+
+  spymasterToggle() {
+    this.board.setSpymaster();
   }
 
   render() {
@@ -149,13 +160,15 @@ class Game extends React.Component {
 
     const prompt = gameOver ? `${player} IS VICTORIOUS` : `${player}'S TURN`;
     const message = this.state.player ? prompt : "Loading data...";
-    const scoreline = this.state.redLeft ? `${this.state.redLeft}-${this.state.blueLeft}` : "_";
+    const scoreline = this.state.redLeft || this.state.redLeft === 0 ? `${this.state.redLeft}-${this.state.blueLeft}` : "_";
+
+    const board = this.state.board ? this.state.board : <Board onRef={ref => (this.board = ref)} player={player} handleSelection={this.handleSelection} />;
 
     return (
       <div className="game">
         <div>{message}</div>
         <span>{scoreline}</span>
-        <Board onRef={ref => (this.board = ref)} player={player} handleSelection={this.handleSelection} />
+        <Board onRef={ref => (this.board = ref)} player={player} handleSelection={this.handleSelection}  isSpymaster={this.state.spymaster}/>
         <form onSubmit={this.handleSubmit}>
           <input
             type="text"
@@ -166,6 +179,7 @@ class Game extends React.Component {
           <input type="submit" value="Add Word" />
         </form>
         <button onClick={this.triggerNewBoard}>New Game</button>
+        <button onClick={this.spymasterToggle}>Spymaster Toggle</button>
       </div>
     );
   }

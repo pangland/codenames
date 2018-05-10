@@ -22,7 +22,7 @@ class Word extends React.Component {
   }
 
   selectCard() {
-    if (!this.state.selected) {
+    if (!this.state.selected && !this.props.visible) {
       const path = "lobbies" + this.props.location.pathname + "/board/" + this.props.index;
       const cardRef = fire.database().ref(path);
 
@@ -36,22 +36,22 @@ class Word extends React.Component {
   }
 
   render() {
-    if (this.props.selected && this.props.word === "alamo") {
-      console.log('prop is true');
-    }
-
-    if (this.state.selected && this.props.word === "alamo") {
-      console.log('state is true');
-    }
-
     // debugger;
     const code = {0: 'blue', 1: 'red', 2: 'beige', 3: 'black'};
+    let className;
+    if (this.state.selected) {
+      className = code[this.props.cardType];
+    } else if (this.props.visible) {
+      className = code[this.props.cardType] + "-visible";
+    }
 
-    const className = this.state.selected ? code[this.props.cardType] : "";
-
+    // const className = this.state.selected ? code[this.props.cardType] : "";
+    debugger;
     return (
       <li className={className} onClick={this.selectCard}>
-        {this.props.word}
+        <span>
+          {this.props.word}
+        </span>
       </li>
     );
   }
