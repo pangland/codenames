@@ -38,7 +38,6 @@ class Board extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     console.log('Will Receive Props');
-    debugger;
     if (this.state.lobby !== nextProps.location.pathname) {
       const lobby = nextProps.location.pathname;
       const boardRef = fire.database().ref("lobbies" + lobby + "/board");
@@ -84,7 +83,6 @@ class Board extends React.Component {
   }
 
   renderFirebaseBoard(snapshot) {
-    debugger;
     const data = snapshot.val();
     console.log(data[0]);
     const wordList = [];
@@ -197,8 +195,6 @@ class Board extends React.Component {
   }
 
   render() {
-    debugger;
-
     const blankBoard = [];
     for (let i = 0; i < 25; i++) {
       blankBoard.push(<li key={i} className="hidden">blah</li>);

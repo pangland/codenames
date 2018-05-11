@@ -67,6 +67,10 @@ span {
   color: white;
 }
 
+.BLUE-prompt {
+  color: blue;
+}
+
 .blue-visible {
   /*background-color: beige;*/
   color: blue;
@@ -99,6 +103,10 @@ span {
   border-color: rgb(226, 61, 21);*/
   background: radial-gradient(rgb(226, 61, 21), rgb(103, 20, 10));
   color: white;
+}
+
+.RED-prompt {
+  color: red;
 }
 
 .red-visible {

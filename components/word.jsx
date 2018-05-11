@@ -45,8 +45,6 @@ class Word extends React.Component {
       className = code[this.props.cardType] + "-visible";
     }
 
-    // const className = this.state.selected ? code[this.props.cardType] : "";
-    debugger;
     return (
       <li className={className} onClick={this.selectCard}>
         <span>

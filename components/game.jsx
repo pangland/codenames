@@ -1,6 +1,7 @@
 import React from 'react';
 import Word from './word';
 import Board from './board';
+import Prompt from './prompt';
 import fire from '../firebase';
 import { History, withRouter } from 'react-router-dom';
 import { uniqueId } from './util';
@@ -162,11 +163,11 @@ class Game extends React.Component {
     const message = this.state.player ? prompt : "Loading data...";
     const scoreline = this.state.redLeft || this.state.redLeft === 0 ? `${this.state.redLeft}-${this.state.blueLeft}` : "_";
 
-    const board = this.state.board ? this.state.board : <Board onRef={ref => (this.board = ref)} player={player} handleSelection={this.handleSelection} />;
+    // const board = this.state.board ? this.state.board : <Board onRef={ref => (this.board = ref)} player={player} handleSelection={this.handleSelection} />;
 
     return (
       <div className="game">
-        <div>{message}</div>
+        <Prompt player={player} gameOver={gameOver}/>
         <span>{scoreline}</span>
         <Board onRef={ref => (this.board = ref)} player={player} handleSelection={this.handleSelection}  isSpymaster={this.state.spymaster}/>
         <form onSubmit={this.handleSubmit}>
