@@ -7,10 +7,8 @@ class Prompt extends React.Component {
     const message = player ? prompt : "Loading data...";
     const className = `${player}-prompt`;
 
-    debugger;
-
     return (
-      <div className={className}>
+      <div className={className + " prompt"}>
         {message}
       </div>
     );

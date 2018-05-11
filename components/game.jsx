@@ -2,8 +2,9 @@ import React from 'react';
 import Word from './word';
 import Board from './board';
 import Prompt from './prompt';
+import Scoreline from './scoreline';
 import fire from '../firebase';
-import { History, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { uniqueId } from './util';
 
 class Game extends React.Component {
@@ -157,7 +158,7 @@ class Game extends React.Component {
 
   render() {
     console.log('rerender game');
-    const {player, gameOver} = this.state;
+    const {player, gameOver, redLeft, blueLeft} = this.state;
 
     const prompt = gameOver ? `${player} IS VICTORIOUS` : `${player}'S TURN`;
     const message = this.state.player ? prompt : "Loading data...";
@@ -167,9 +168,9 @@ class Game extends React.Component {
 
     return (
       <div className="game">
-        <Prompt player={player} gameOver={gameOver}/>
-        <span>{scoreline}</span>
-        <Board onRef={ref => (this.board = ref)} player={player} handleSelection={this.handleSelection}  isSpymaster={this.state.spymaster}/>
+        <Prompt player={player} gameOver={gameOver} />
+        <Scoreline redLeft={redLeft} blueLeft={blueLeft} />
+        <Board onRef={ref => (this.board = ref)} player={player} handleSelection={this.handleSelection}  isSpymaster={this.state.spymaster} />
         <form onSubmit={this.handleSubmit}>
           <input
             type="text"

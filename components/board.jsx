@@ -197,7 +197,7 @@ class Board extends React.Component {
   render() {
     const blankBoard = [];
     for (let i = 0; i < 25; i++) {
-      blankBoard.push(<li key={i} className="hidden">blah</li>);
+      blankBoard.push(<li key={i} className="hidden board"><span></span></li>);
     }
 
     return (
