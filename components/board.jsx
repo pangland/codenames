@@ -26,7 +26,10 @@ class Board extends React.Component {
 
   componentDidMount() {
     this.props.onRef(this);
-    const boardRef = fire.database().ref("lobbies" + this.props.location.pathname).child('board');
+
+    const path = "lobbies" + this.props.location.pathname;
+    const boardRef = fire.database().ref(path).child('board');
+
     boardRef.on("value", (snapshot) => {
       this.renderFirebaseBoard(snapshot);
     });
