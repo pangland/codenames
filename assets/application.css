@@ -36,6 +36,11 @@ span {
   font-size: 20px;
 }
 
+li > span {
+  font-size: 1.25vw;
+  padding: 5% 15% 5% 15%;
+}
+
 .beige {
   /*background-color: rgb(221, 175, 152);*/
   border-color: rgb(221, 175, 152);
