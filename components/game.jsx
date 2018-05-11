@@ -32,6 +32,7 @@ class Game extends React.Component {
     });
 
     this.state.value = "";
+    this.state.isSpymaster = false;
   }
 
   componentDidMount() {
@@ -54,6 +55,7 @@ class Game extends React.Component {
       this.lobbyRef = fire.database().ref("lobbies" + nextProps.location.pathname);
       this.lobbyRef.once("value", (snapshot) => {
         if (snapshot.child('player').exists()) {
+          this.setState({ blueLeft: this.state.blueLeft - 1 });
           this.fetchStartingConditions(snapshot);
         } else {
           this.newStartingConditions();
@@ -91,8 +93,7 @@ class Game extends React.Component {
       blueLeft: blueLeft,
       redLeft: redLeft,
       gameOver: false,
-      isSpymaster: false,
-      board: <Board onRef={ref => (this.board = ref)} player={player} handleSelection={this.handleSelection} />
+      isSpymaster: false
     });
   }
 
@@ -103,7 +104,6 @@ class Game extends React.Component {
 
     if (cardType === 0) {
       lobbyRef.update({blueLeft: this.state.blueLeft - 1});
-      this.setState({ blueLeft: this.state.blueLeft - 1 });
     } else if (cardType === 1) {
       lobbyRef.update({redLeft: this.state.redLeft - 1});
       this.setState({ redLeft: this.state.redLeft - 1 });
@@ -153,20 +153,33 @@ class Game extends React.Component {
   }
 
   spymasterToggle() {
+    this.setState({ isSpymaster: this.state.isSpymaster ? false: true });
     this.board.setSpymaster();
   }
 
   render() {
-    const {player, gameOver, redLeft, blueLeft} = this.state;
+    const {player, gameOver, redLeft, blueLeft, isSpymaster} = this.state;
+
+    let endTurnButton;
+    let spymasterButtonText;
+    if (isSpymaster) {
+      spymasterButtonText = "Become Spymaster";
+      endTurnButton = null;
+    } else {
+      spymasterButtonText = "Become Agent";
+      endTurnButton = <button onClick={this.swapPlayer}>End Turn</button>;
+    }
 
     return (
       <div className="game">
         <Prompt player={player} gameOver={gameOver} />
         <Scoreline redLeft={redLeft} blueLeft={blueLeft} />
-        <Board onRef={ref => (this.board = ref)} player={player} handleSelection={this.handleSelection}  isSpymaster={this.state.spymaster} />
-        <button onClick={this.triggerNewBoard}>New Game</button>
-        <button onClick={this.spymasterToggle}>Spymaster Toggle</button>
-        <button onClick={this.swapPlayer}>End Turn</button>
+        <Board onRef={ref => (this.board = ref)} player={player} handleSelection={this.handleSelection} />
+        <div className="buttons-div">
+          <button onClick={this.spymasterToggle}>{spymasterButtonText}</button>
+          {endTurnButton}
+          <button onClick={this.triggerNewBoard}>New Game</button>
+        </div>
         <WordForm />
       </div>
     );

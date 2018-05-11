@@ -83,10 +83,29 @@ span {
   max-height: 700px;
 }
 
+.buttons-div {
+  margin-left: .5%;
+  margin-right: .5%;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+}
+
+.buttons-div > button {
+  height: 50px;
+  background-color: purple;
+  font-size: 18px;
+  color: white;
+  border-radius: 1px solid black;
+  border-radius: 5px;
+}
+
 .game {
   margin: auto auto;
   max-width: 800px;
   max-height: 700px;
+  width: 40%;
+  height: 40%;
 }
 
 .game > div {
@@ -95,6 +114,11 @@ span {
 
 .hidden {
   color: transparent;
+}
+
+.homepage-div {
+  max-width: 800px;
+  margin: 0 auto;
 }
 
 .prompt {

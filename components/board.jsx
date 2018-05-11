@@ -64,6 +64,10 @@ class Board extends React.Component {
     this.quickReRender();
   }
 
+  spymasterStatus() {
+    return this.isSpymaster;
+  }
+
   quickReRender() {
     const newList = [];
     this.state.wordList.forEach((word) => {
