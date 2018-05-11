@@ -1,0 +1,149 @@
+ul {
+  padding-left: 0;
+  margin: auto auto;
+  display: flex;
+  flex-wrap: wrap;
+  box-sizing: border-box;
+  /*flex-direction: row;*/
+  /*align-items: space-around;*/
+  /*justify-content: space-around;*/
+}
+
+li {
+  /*flex-basis: 100%;*/
+  border: 1px solid black;
+  width: 19%;
+  padding: 5% 0 5% 0;
+  margin: .5%;
+  text-align: center;
+  background-color: beige;
+  /*border-radius: 5px 5px 5px 5px;*/
+  /*height: 20%;*/
+  /*padding: 5% 10% 5% 10%;*/
+  /*flex: 1;*/
+
+  list-style-type: none;
+  box-sizing: border-box;
+}
+
+span {
+  /*background-color: white;*/
+  width: 80%;
+  text-align: center;
+  padding: 5px 15px 5px 15px;
+  /*border: 1px solid white;*/
+  /*border-radius: 5px 5px 5px 5px;*/
+  font-size: 20px;
+}
+
+li > span {
+  font-size: 1.25vw;
+  padding: 5% 15% 5% 15%;
+}
+
+.beige {
+  /*background-color: rgb(221, 175, 152);*/
+  border-color: rgb(221, 175, 152);
+  background: radial-gradient(rgb(211, 207, 192), rgb(190, 178, 164));
+  color: black;
+}
+
+.beige-visible {
+  color: purple;
+  font-weight: bold;
+}
+
+.black {
+  /*background-color: black;*/
+  background: radial-gradient(rgb(82, 82, 82), rgb(15, 15, 15));
+  color: white;
+}
+
+.black-visible {
+  color: black;
+  font-weight: bold;
+}
+
+.blue {
+  /*background-color: lightblue;*/
+  /*border-color: lightblue;*/
+  /*background-color: rgb(23, 81, 127);
+  border-color: rgb(23, 81, 127);*/
+  background: radial-gradient(rgb(118, 173, 219), rgb(23, 81, 127));
+  color: white;
+}
+
+.BLUE-prompt {
+  color: blue;
+}
+
+.blue-visible {
+  /*background-color: beige;*/
+  color: blue;
+  font-weight: bold;
+}
+
+.board {
+  max-width: 800px;
+  max-height: 700px;
+}
+
+.buttons-div {
+  margin-left: .5%;
+  margin-right: .5%;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+}
+
+.buttons-div > button {
+  height: 50px;
+  background-color: purple;
+  font-size: 18px;
+  color: white;
+  border-radius: 1px solid black;
+  border-radius: 5px;
+}
+
+.game {
+  margin: auto auto;
+  max-width: 800px;
+  max-height: 700px;
+  width: 40%;
+  height: 40%;
+}
+
+.game > div {
+  text-align: center;
+}
+
+.hidden {
+  color: transparent;
+}
+
+.homepage-div {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.prompt {
+  font-size: 18px;
+}
+
+.red {
+  /*background-color: red;
+  border-color: red;*/
+  /*background-color: rgb(226, 61, 21);
+  border-color: rgb(226, 61, 21);*/
+  background: radial-gradient(rgb(226, 61, 21), rgb(103, 20, 10));
+  color: white;
+}
+
+.RED-prompt {
+  color: red;
+}
+
+.red-visible {
+  color: red;
+  font-weight: bold;
+}

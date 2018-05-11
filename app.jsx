@@ -1,5 +1,6 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
+import Homepage from './components/homepage';
 import Game from './components/game';
 // import Classroom from './frontend/classroom';
 // import Navbar from './frontend/navbar';
@@ -7,7 +8,10 @@ import Game from './components/game';
 const App = () => {
   return (
     <div>
-      <Route exact path="/" component={Game} />
+      <Switch>
+        <Route exact path="/" component={Homepage} />
+        <Route path="/" component={Game} />
+      </Switch>
     </div>
   );
 };
