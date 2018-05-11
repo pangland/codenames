@@ -3,6 +3,7 @@ import Word from './word';
 import Board from './board';
 import Prompt from './prompt';
 import Scoreline from './scoreline';
+import WordForm from './word_form';
 import fire from '../firebase';
 import { withRouter } from 'react-router-dom';
 import { uniqueId } from './util';
@@ -12,8 +13,7 @@ class Game extends React.Component {
     super(props);
 
     this.handleSelection = this.handleSelection.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.swapPlayer = this.swapPlayer.bind(this);
     this.newStartingConditions = this.newStartingConditions.bind(this);
     this.triggerNewBoard = this.triggerNewBoard.bind(this);
     this.spymasterToggle = this.spymasterToggle.bind(this);
@@ -157,31 +157,17 @@ class Game extends React.Component {
   }
 
   render() {
-    console.log('rerender game');
     const {player, gameOver, redLeft, blueLeft} = this.state;
-
-    const prompt = gameOver ? `${player} IS VICTORIOUS` : `${player}'S TURN`;
-    const message = this.state.player ? prompt : "Loading data...";
-    const scoreline = this.state.redLeft || this.state.redLeft === 0 ? `${this.state.redLeft}-${this.state.blueLeft}` : "_";
-
-    // const board = this.state.board ? this.state.board : <Board onRef={ref => (this.board = ref)} player={player} handleSelection={this.handleSelection} />;
 
     return (
       <div className="game">
         <Prompt player={player} gameOver={gameOver} />
         <Scoreline redLeft={redLeft} blueLeft={blueLeft} />
         <Board onRef={ref => (this.board = ref)} player={player} handleSelection={this.handleSelection}  isSpymaster={this.state.spymaster} />
-        <form onSubmit={this.handleSubmit}>
-          <input
-            type="text"
-            pattern="[A-Za-z]+"
-            value={this.state.value}
-            onChange={this.handleChange}
-            title="Please only use numbers and letters" />
-          <input type="submit" value="Add Word" />
-        </form>
         <button onClick={this.triggerNewBoard}>New Game</button>
         <button onClick={this.spymasterToggle}>Spymaster Toggle</button>
+        <button onClick={this.swapPlayer}>End Turn</button>
+        <WordForm />
       </div>
     );
   }
