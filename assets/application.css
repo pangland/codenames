@@ -109,13 +109,22 @@ li > span {
   margin: auto auto;
   max-width: 800px;
   max-height: 700px;
-  width: 40%;
-  height: 40%;
+  width: 800px;
+  height: 700px;
+}
+
+@media only screen and (max-width: 1000px) {
+  .game {
+    width: 80%;
+    padding: 5% 0 5% 0;
+    margin: .5%;
+  }
 }
 
 .game > div {
   text-align: center;
 }
+
 
 .hidden {
   color: transparent;
@@ -124,6 +133,17 @@ li > span {
 .homepage-div {
   max-width: 800px;
   margin: 0 auto;
+}
+
+.new-word-input {
+  height: 20px;
+  padding-top: 13px;
+  padding-bottom: 13px;
+  padding-left: 40px;
+  // width: 305px;
+  width: 100%;
+  font-size: 14px;
+  box-sizing: border-box;
 }
 
 .prompt {
@@ -147,3 +167,12 @@ li > span {
   color: red;
   font-weight: bold;
 }
+
+/*@media only screen and (max-width: 800px) {
+  li {
+    width: 19%;
+    padding: 5% 0 5% 0;
+    margin: .5%;
+
+  }
+}*/

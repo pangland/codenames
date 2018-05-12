@@ -36,7 +36,6 @@ class WordForm extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    debugger;
     const permanentLobby = this.state.permanentLobby;
     const path = this.props.location.pathname;
     const nextPath = nextProps.location.pathname;
@@ -75,8 +74,9 @@ class WordForm extends React.Component {
   render() {
     if (this.state.permanentLobby) {
       return (
-        <form onSubmit={this.handleSubmit}>
+        <form className="new-word-form" onSubmit={this.handleSubmit}>
           <input
+            className="new-word-input"
             type="text"
             pattern="[A-Za-z]+"
             value={this.state.value}
