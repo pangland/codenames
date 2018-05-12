@@ -27,12 +27,12 @@ class Board extends React.Component {
   componentDidMount() {
     this.props.onRef(this);
 
-    const path = "lobbies" + this.props.location.pathname;
-    const boardRef = fire.database().ref(path).child('board');
-
-    boardRef.on("value", (snapshot) => {
-      this.renderFirebaseBoard(snapshot);
-    });
+    // const path = "lobbies" + this.props.location.pathname;
+    // const boardRef = fire.database().ref(path).child('board');
+    //
+    // boardRef.on("value", (snapshot) => {
+    //   this.renderFirebaseBoard(snapshot);
+    // });
   }
 
   componentWillUnmount() {

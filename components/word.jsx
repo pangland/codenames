@@ -36,7 +36,6 @@ class Word extends React.Component {
   }
 
   render() {
-    // debugger;
     const code = {0: 'blue', 1: 'red', 2: 'beige', 3: 'black'};
     let className;
     if (this.state.selected) {

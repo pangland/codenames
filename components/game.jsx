@@ -96,13 +96,13 @@ class Game extends React.Component {
     });
   }
 
-
   handleSelection(cardType) {
     const path = "lobbies" + this.props.location.pathname;
     const lobbyRef = fire.database().ref(path);
 
     if (cardType === 0) {
       lobbyRef.update({blueLeft: this.state.blueLeft - 1});
+      this.setState({ blueLeft: this.state.blueLeft - 1 });
     } else if (cardType === 1) {
       lobbyRef.update({redLeft: this.state.redLeft - 1});
       this.setState({ redLeft: this.state.redLeft - 1 });
