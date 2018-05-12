@@ -1,6 +1,6 @@
 import React from 'react';
 import fire from '../firebase';
-import { History, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
 class Word extends React.Component {
   constructor(props) {

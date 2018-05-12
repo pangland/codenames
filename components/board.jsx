@@ -73,9 +73,10 @@ class Board extends React.Component {
 
   quickReRender() {
     const newList = [];
-    this.state.wordList.forEach((word) => {
+    this.state.wordList.forEach((word, i) => {
       newList.push(
         <Word
+          key={i}
           key={word.props.key}
           index={word.props.index}
           word={word.props.word}
@@ -91,12 +92,11 @@ class Board extends React.Component {
 
   renderFirebaseBoard(snapshot) {
     const data = snapshot.val();
-    console.log(data[0]);
     const wordList = [];
     for (let i = 0; i < 25; i++) {
       wordList.push(
         <Word
-          key={uniqueId() + i}
+          key={i}
           index={i}
           word={data[i].word}
           cardType={data[i].cardType}
@@ -149,11 +149,6 @@ class Board extends React.Component {
     }, {});
 
     lobbyRef.once("value", (snapshot) => {
-      // console.log('newBoard in board');
-      // wordStatuses.push(snapshot.val().player === "BLUE" ? 0 : 1);
-      // // wordStatuses.push(this.props.player === "BLUE" ? 0 : 1);
-      // this.shuffleArray(wordStatuses);
-
       Object.assign(allWords, snapshot.child('lobbyWordList').val(), dictionaryObj);
 
       const words = this.shuffleArray(Object.keys(allWords)).slice(0,25);
@@ -164,7 +159,7 @@ class Board extends React.Component {
         board[i]= {word: word, selected: false, cardType: wordStatuses[i]};
         wordList.push(
           <Word
-            key={uniqueId() + i}
+            key={i}
             index={i}
             word={word}
             cardType={wordStatuses[i]}
@@ -202,6 +197,9 @@ class Board extends React.Component {
   }
 
   render() {
+    console.log('Count the renders');
+    console.log('.');
+    console.log('/');
     const blankBoard = [];
     for (let i = 0; i < 25; i++) {
       blankBoard.push(<li key={i} className="hidden board"><span></span></li>);
