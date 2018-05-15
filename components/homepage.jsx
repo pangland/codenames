@@ -2,6 +2,7 @@ import React from 'react';
 import fire from '../firebase';
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
+import { uniqueId } from './util.js';
 
 class Homepage extends React.Component {
   constructor(props) {
@@ -9,6 +10,7 @@ class Homepage extends React.Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.randomRoom = this.randomRoom.bind(this);
 
     this.state = {
       value: ""
@@ -35,12 +37,17 @@ class Homepage extends React.Component {
     });
   }
 
+  randomRoom(e) {
+    const path = '/' + uniqueId();
+    this.props.history.push(path);
+  }
+
   render() {
     return (
       <div className="homepage-div">
-        <h3>CODENAMES</h3>
+        <h3>CODENAMES [BETA]</h3>
         <p>This site allows you to reserve a permanent lobby and add your own words to the game.</p>
-        <p>I don't need a dedicated lobby, just give me a room!</p>
+        <p className='random-room-p' onClick={this.randomRoom}>I don't need a dedicated lobby, just give me a room!</p>
         <p>I have a room already! (note you can just navigate to your URL extension)</p>
         <p>I'll make a new room for myself!</p>
         <form onSubmit={this.handleSubmit}>

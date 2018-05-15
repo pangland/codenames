@@ -15,8 +15,10 @@ class Word extends React.Component {
     const path = "lobbies" + this.props.location.pathname + "/board/" + this.props.index;
     const cardRef = fire.database().ref(path);
     cardRef.on('value', (snapshot) => {
+      console.log(snapshot.val().selected);
       this.setState({
-        selected: snapshot.val().selected
+        selected: snapshot.val().selected,
+        word: snapshot.val().word
       });
     });
   }
@@ -36,6 +38,7 @@ class Word extends React.Component {
   }
 
   render() {
+    console.log('word');
     const code = {0: 'blue', 1: 'red', 2: 'beige', 3: 'black'};
     let className;
     if (this.state.selected) {

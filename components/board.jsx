@@ -27,12 +27,12 @@ class Board extends React.Component {
   componentDidMount() {
     this.props.onRef(this);
 
-    // const path = "lobbies" + this.props.location.pathname;
-    // const boardRef = fire.database().ref(path).child('board');
-    //
-    // boardRef.on("value", (snapshot) => {
-    //   this.renderFirebaseBoard(snapshot);
-    // });
+    const path = "lobbies" + this.props.location.pathname;
+    const boardRef = fire.database().ref(path).child('board');
+
+    boardRef.on("value", (snapshot) => {
+      this.renderFirebaseBoard(snapshot);
+    });
   }
 
   componentWillUnmount() {
@@ -52,9 +52,10 @@ class Board extends React.Component {
           this.renderFirebaseBoard(snapshot);
         }
       });
+      this.setState({ lobby: nextProps.location.pathname });
+      return true;
     }
 
-    this.setState({ lobby: nextProps.location.pathname });
     return true;
   }
 
@@ -109,6 +110,8 @@ class Board extends React.Component {
     this.setState({
       wordList: wordList
     });
+
+    this.forceUpdate();
   }
 
   newBoard() {
@@ -119,7 +122,7 @@ class Board extends React.Component {
     ];
 
     const lobbyRef = fire.database().ref("lobbies" + this.props.location.pathname);
-    debugger;
+
     // // wordStatuses.push(lobbyRef.snapshot.val().player === "BLUE" ? 0 : 1);
 
     if (this.player) {
@@ -139,7 +142,7 @@ class Board extends React.Component {
       'alamo', 'beagles', 'cyan', 'delta', 'elephant', 'fountain',
       'ghoul', 'hipster', 'illegitimate', 'junction', 'Klingon',
       'lemon', 'Madagascar', 'novice', 'operation', 'prinicpal',
-      'query', 'rewind', 'saturation', 'testicle', 'underwater',
+      'query', 'rewind', 'saturation', 'tents', 'underwater',
       'villain', 'water', 'xylaphone', 'yankees'
     ];
 
@@ -159,7 +162,7 @@ class Board extends React.Component {
         board[i]= {word: word, selected: false, cardType: wordStatuses[i]};
         wordList.push(
           <Word
-            key={i}
+            key={uniqueId() + i}
             index={i}
             word={word}
             cardType={wordStatuses[i]}
@@ -184,6 +187,7 @@ class Board extends React.Component {
       // });
 
       this.setState({ wordList: wordList });
+      console.log("New Board");
     });
   }
 

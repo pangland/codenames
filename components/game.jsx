@@ -24,7 +24,12 @@ class Game extends React.Component {
 
     this.lobbyRef.once("value", (snapshot) => {
       if (snapshot.child('board').exists()) {
-        this.fetchStartingConditions(snapshot);
+        this.setState({
+          redLeft: snapshot.val().redLeft,
+          blueLeft: snapshot.val().blueLeft,
+          player: snapshot.val().player,
+          gameOver: snapshot.val().gameOver
+        });
       } else {
         this.newStartingConditions();
       }
