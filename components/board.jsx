@@ -53,10 +53,21 @@ class Board extends React.Component {
         }
       });
       this.setState({ lobby: nextProps.location.pathname });
+      this.activateFirebaseListener(nextProps.location.pathname);
       return true;
     }
 
     return true;
+  }
+
+  activateFirebaseListener(pathname) {
+    debugger;
+    const path = "lobbies" + pathname;
+    const boardRef = fire.database().ref(path).child('board');
+
+    boardRef.on("value", (snapshot) => {
+      this.renderFirebaseBoard(snapshot);
+    });
   }
 
   setPlayer(player) {
@@ -77,8 +88,7 @@ class Board extends React.Component {
     this.state.wordList.forEach((word, i) => {
       newList.push(
         <Word
-          key={i}
-          key={word.props.key}
+          key={i + uniqueId()}
           index={word.props.index}
           word={word.props.word}
           cardType={word.props.cardType}
@@ -97,7 +107,7 @@ class Board extends React.Component {
     for (let i = 0; i < 25; i++) {
       wordList.push(
         <Word
-          key={i}
+          key={i + uniqueId()}
           index={i}
           word={data[i].word}
           cardType={data[i].cardType}
@@ -110,8 +120,6 @@ class Board extends React.Component {
     this.setState({
       wordList: wordList
     });
-
-    this.forceUpdate();
   }
 
   newBoard() {
