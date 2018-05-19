@@ -9,7 +9,10 @@ class Board extends React.Component {
     super(props);
     const lobby = this.props.location.pathname;
     const boardRef = fire.database().ref("lobbies" + lobby + "/board");
-    this.isSpymaster = false;
+
+    this.renderFirebaseBoard = this.renderFirebaseBoard.bind(this);
+
+    this.isSpymaster = this.props.isSpymaster;
 
     this.state = {
       lobby: this.props.location.pathname
@@ -28,11 +31,24 @@ class Board extends React.Component {
     this.props.onRef(this);
 
     const path = "lobbies" + this.props.location.pathname;
-    const boardRef = fire.database().ref(path).child('board');
+    this.boardRef = fire.database().ref(path).child('board');
+    this.boardRef.on("value", this.renderFirebaseBoard);
 
-    boardRef.on("value", (snapshot) => {
-      this.renderFirebaseBoard(snapshot);
-    });
+    // boardRef.on("value", (snapshot) => {
+    //   this.renderFirebaseBoard(snapshot);
+    // });
+  }
+
+  activateFirebaseListener(pathname) {
+    const path = "lobbies" + pathname;
+    this.boardRef.off("value", this.renderFirebaseBoard);
+    this.boardRef = fire.database().ref(path).child('board');
+
+    this.boardRef.on("value", this.renderFirebaseBoard);
+
+    // this.boardRef.on("value", (snapshot) => {
+    //   this.renderFirebaseBoard(snapshot);
+    // });
   }
 
   componentWillUnmount() {
@@ -60,16 +76,6 @@ class Board extends React.Component {
     return true;
   }
 
-  activateFirebaseListener(pathname) {
-    debugger;
-    const path = "lobbies" + pathname;
-    const boardRef = fire.database().ref(path).child('board');
-
-    boardRef.on("value", (snapshot) => {
-      this.renderFirebaseBoard(snapshot);
-    });
-  }
-
   setPlayer(player) {
     this.player = player;
   }
@@ -88,7 +94,7 @@ class Board extends React.Component {
     this.state.wordList.forEach((word, i) => {
       newList.push(
         <Word
-          key={i + uniqueId()}
+          key={i}
           index={word.props.index}
           word={word.props.word}
           cardType={word.props.cardType}
@@ -209,9 +215,6 @@ class Board extends React.Component {
   }
 
   render() {
-    console.log('Count the renders');
-    console.log('.');
-    console.log('/');
     const blankBoard = [];
     for (let i = 0; i < 25; i++) {
       blankBoard.push(<li key={i} className="hidden board"><span></span></li>);

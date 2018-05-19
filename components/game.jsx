@@ -167,10 +167,10 @@ class Game extends React.Component {
     let endTurnButton;
     let spymasterButtonText;
     if (isSpymaster) {
-      spymasterButtonText = "Become Spymaster";
+      spymasterButtonText = "Become Agent";
       endTurnButton = null;
     } else {
-      spymasterButtonText = "Become Agent";
+      spymasterButtonText = "Become Spymaster";
       endTurnButton = <button onClick={this.swapPlayer}>End Turn</button>;
     }
 
@@ -178,7 +178,7 @@ class Game extends React.Component {
       <div className="game">
         <Prompt player={player} gameOver={gameOver} />
         <Scoreline redLeft={redLeft} blueLeft={blueLeft} />
-        <Board onRef={ref => (this.board = ref)} player={player} handleSelection={this.handleSelection} />
+        <Board key={uniqueId()} onRef={ref => (this.board = ref)} player={player} isSpymaster={isSpymaster} handleSelection={this.handleSelection} />
         <div className="buttons-div">
           <button onClick={this.spymasterToggle}>{spymasterButtonText}</button>
           {endTurnButton}
