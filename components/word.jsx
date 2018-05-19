@@ -12,15 +12,14 @@ class Word extends React.Component {
   }
 
   componentDidMount() {
-    const path = "lobbies" + this.props.location.pathname + "/board/" + this.props.index;
-    const cardRef = fire.database().ref(path);
-    cardRef.on('value', (snapshot) => {
-      console.log(snapshot.val().selected);
-      this.setState({
-        selected: snapshot.val().selected,
-        word: snapshot.val().word
-      });
-    });
+    // const path = "lobbies" + this.props.location.pathname + "/board/" + this.props.index;
+    // const cardRef = fire.database().ref(path);
+    // cardRef.on('value', (snapshot) => {
+    //   this.setState({
+    //     selected: snapshot.val().selected,
+    //     word: snapshot.val().word
+    //   });
+    // });
   }
 
   selectCard() {

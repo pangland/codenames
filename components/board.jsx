@@ -14,17 +14,7 @@ class Board extends React.Component {
 
     this.isSpymaster = this.props.isSpymaster;
 
-    this.state = {
-      lobby: this.props.location.pathname
-    };
-
-    boardRef.once("value", (snapshot) => {
-      if (!snapshot.exists() || this.props.newBoard) {
-        this.newBoard();
-      } else {
-        this.renderFirebaseBoard(snapshot);
-      }
-    });
+    this.state = {};
   }
 
   componentDidMount() {
@@ -33,22 +23,13 @@ class Board extends React.Component {
     const path = "lobbies" + this.props.location.pathname;
     this.boardRef = fire.database().ref(path).child('board');
     this.boardRef.on("value", this.renderFirebaseBoard);
-
-    // boardRef.on("value", (snapshot) => {
-    //   this.renderFirebaseBoard(snapshot);
-    // });
   }
 
   activateFirebaseListener(pathname) {
     const path = "lobbies" + pathname;
     this.boardRef.off("value", this.renderFirebaseBoard);
     this.boardRef = fire.database().ref(path).child('board');
-
     this.boardRef.on("value", this.renderFirebaseBoard);
-
-    // this.boardRef.on("value", (snapshot) => {
-    //   this.renderFirebaseBoard(snapshot);
-    // });
   }
 
   componentWillUnmount() {
@@ -56,24 +37,20 @@ class Board extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log('Will Receive Props');
-    if (this.state.lobby !== nextProps.location.pathname) {
-      const lobby = nextProps.location.pathname;
-      const boardRef = fire.database().ref("lobbies" + lobby + "/board");
-
-      boardRef.once("value", (snapshot) => {
+    if (this.props.location.pathname !== nextProps.location.pathname) {
+      this.activateFirebaseListener(nextProps.location.pathname);
+      this.boardRef.once("value", (snapshot) => {
         if (!snapshot.exists()) {
-          this.newBoard();
+          // this.newBoard();
         } else {
           this.renderFirebaseBoard(snapshot);
         }
       });
-      this.setState({ lobby: nextProps.location.pathname });
-      this.activateFirebaseListener(nextProps.location.pathname);
+
       return true;
     }
 
-    return true;
+    return false;
   }
 
   setPlayer(player) {
@@ -108,6 +85,7 @@ class Board extends React.Component {
   }
 
   renderFirebaseBoard(snapshot) {
+    console.log('How many renders');
     const data = snapshot.val();
     const wordList = [];
     for (let i = 0; i < 25; i++) {
@@ -147,9 +125,6 @@ class Board extends React.Component {
     }
     this.shuffleArray(wordStatuses);
 
-    // const lobbyWordsPath = "lobbies" + this.props.location.pathname + "/lobbyWordList";
-    // const lobbyWordList = fire.database().ref(lobbyWordsPath);
-
     const allWords = {};
 
     const dictionary = [
@@ -176,7 +151,7 @@ class Board extends React.Component {
         board[i]= {word: word, selected: false, cardType: wordStatuses[i]};
         wordList.push(
           <Word
-            key={uniqueId() + i}
+            key={i}
             index={i}
             word={word}
             cardType={wordStatuses[i]}
@@ -200,7 +175,7 @@ class Board extends React.Component {
       //   );
       // });
 
-      this.setState({ wordList: wordList });
+      // this.setState({ wordList: wordList });
       console.log("New Board");
     });
   }

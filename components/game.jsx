@@ -16,6 +16,7 @@ class Game extends React.Component {
     this.newStartingConditions = this.newStartingConditions.bind(this);
     this.triggerNewBoard = this.triggerNewBoard.bind(this);
     this.spymasterToggle = this.spymasterToggle.bind(this);
+    this.fetchStartingConditions = this.fetchStartingConditions.bind(this);
 
     const lobby = this.props.location.pathname;
     this.lobbyRef = fire.database().ref("lobbies" + lobby);
@@ -23,14 +24,7 @@ class Game extends React.Component {
     this.state = {};
 
     this.lobbyRef.once("value", (snapshot) => {
-      if (snapshot.child('board').exists()) {
-        this.setState({
-          redLeft: snapshot.val().redLeft,
-          blueLeft: snapshot.val().blueLeft,
-          player: snapshot.val().player,
-          gameOver: snapshot.val().gameOver
-        });
-      } else {
+      if (!snapshot.child('board').exists()) {
         this.newStartingConditions();
       }
     });
@@ -41,27 +35,22 @@ class Game extends React.Component {
 
   componentDidMount() {
     const path = "lobbies" + this.props.location.pathname;
-    const lobbyRef = fire.database().ref(path);
-    lobbyRef.on('value', (snapshot) => {
-      this.setState({
-        player: snapshot.val().player,
-        blueLeft: snapshot.val().blueLeft,
-        redLeft: snapshot.val().redLeft,
-        gameOver: snapshot.val().gameOver
-      });
-    });
+    this.lobbyRef = fire.database().ref(path);
+    this.lobbyRef.on('value', this.fetchStartingConditions);
+  }
+
+  activateFirebaseListener(pathname) {
+    const path = "lobbies" + pathname;
+    this.lobbyRef.off("value", this.fetchStartingConditions);
+    this.lobbyRef = fire.database().ref(path);
+    this.lobbyRef.on("value", this.fetchStartingConditions);
   }
 
   componentWillReceiveProps(nextProps) {
-    // const lobby = this.props.location.pathname;
-    // this.lobbyRef = fire.database().ref("lobbies" + lobby);
     if (this.props.location.pathname !== nextProps.location.pathname) {
-      this.lobbyRef = fire.database().ref("lobbies" + nextProps.location.pathname);
+      this.activateFirebaseListener(nextProps.location.pathname);
       this.lobbyRef.once("value", (snapshot) => {
-        if (snapshot.child('player').exists()) {
-          this.setState({ blueLeft: this.state.blueLeft - 1 });
-          this.fetchStartingConditions(snapshot);
-        } else {
+        if (!snapshot.child('player').exists()) {
           this.newStartingConditions();
         }
       });
@@ -81,9 +70,10 @@ class Game extends React.Component {
     const player = Math.random() >= .5 ? "BLUE" : "RED";
     console.log('THE PLAYER IS:' + player);
     const redLeft = player === "BLUE" ? 8 : 9;
-    const blueLeft = player  === "BLUE" ? 9 : 8;
+    const blueLeft = player === "BLUE" ? 9 : 8;
 
     this.board.setPlayer(player);
+    this.board.newBoard();
 
     this.lobbyRef.update({
       player: player,
@@ -93,29 +83,19 @@ class Game extends React.Component {
     });
 
     this.setState({
-      player: player,
-      blueLeft: blueLeft,
-      redLeft: redLeft,
-      gameOver: false,
       isSpymaster: false
     });
   }
 
   handleSelection(cardType) {
-    const path = "lobbies" + this.props.location.pathname;
-    const lobbyRef = fire.database().ref(path);
-
     if (cardType === 0) {
-      lobbyRef.update({blueLeft: this.state.blueLeft - 1});
-      this.setState({ blueLeft: this.state.blueLeft - 1 });
+      this.lobbyRef.update({blueLeft: this.state.blueLeft - 1});
     } else if (cardType === 1) {
-      lobbyRef.update({redLeft: this.state.redLeft - 1});
-      this.setState({ redLeft: this.state.redLeft - 1 });
+      this.lobbyRef.update({redLeft: this.state.redLeft - 1});
     }
 
     if (cardType === 3) {
-      lobbyRef.update({ gameOver: true });
-      this.setState( {gameOver: true} );
+      this.lobbyRef.update({ gameOver: true });
       this.swapPlayer();
     } else if (this.state.player === "BLUE" && cardType !== 0) {
       this.swapPlayer();
@@ -143,17 +123,14 @@ class Game extends React.Component {
   }
 
   swapPlayer() {
-    // const path = "lobbies" + this.props.location.pathname;
-    // const lobbyRef = fire.database().ref(path);
     if (!this.state.gameOver) {
       this.lobbyRef.update({player: this.state.player === "BLUE" ? "RED" : "BLUE"});
-      this.setState({ player: this.state.player === "BLUE" ? "RED" : "BLUE" });
     }
   }
 
   triggerNewBoard() {
     this.newStartingConditions();
-    this.board.newBoard();
+    // this.board.newBoard();
   }
 
   spymasterToggle() {
