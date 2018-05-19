@@ -41,9 +41,21 @@ class Word extends React.Component {
     let className;
     if (this.state.selected) {
       className = code[this.props.cardType];
+      if (this.props.word === "fountain" && this.props.index === 0) {
+        // console.log(this.state.selected);
+      }
     } else if (this.props.visible) {
       className = code[this.props.cardType] + "-visible";
+      } else if (this.props.word === "fountain" && this.props.index === 0) {
+      // console.log('false');
+      // console.log(this.props.word);
     }
+
+
+
+    // if (this.props.word === "fountain") {
+    //   console.log(this.props.selected);
+    // }
 
     return (
       <li className={className} onClick={this.selectCard}>

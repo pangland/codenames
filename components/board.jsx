@@ -2,7 +2,7 @@ import React from 'react';
 import Word from './word';
 import { History, withRouter } from 'react-router-dom';
 import fire from '../firebase';
-import { uniqueId } from './util';
+import { uniqueId, uniqueId2 } from './util';
 
 class Board extends React.Component {
   constructor(props) {
@@ -85,13 +85,12 @@ class Board extends React.Component {
   }
 
   renderFirebaseBoard(snapshot) {
-    console.log('How many renders');
     const data = snapshot.val();
     const wordList = [];
     for (let i = 0; i < 25; i++) {
       wordList.push(
         <Word
-          key={i + uniqueId()}
+          key={uniqueId2()}
           index={i}
           word={data[i].word}
           cardType={data[i].cardType}
@@ -151,7 +150,7 @@ class Board extends React.Component {
         board[i]= {word: word, selected: false, cardType: wordStatuses[i]};
         wordList.push(
           <Word
-            key={i}
+            key={uniqueId2()}
             index={i}
             word={word}
             cardType={wordStatuses[i]}
@@ -176,7 +175,7 @@ class Board extends React.Component {
       // });
 
       // this.setState({ wordList: wordList });
-      console.log("New Board");
+      // console.log("New Board");
     });
   }
 
@@ -194,6 +193,8 @@ class Board extends React.Component {
     for (let i = 0; i < 25; i++) {
       blankBoard.push(<li key={i} className="hidden board"><span></span></li>);
     }
+
+    // console.log(uniqueId2());
 
     return (
       <ul className="board">

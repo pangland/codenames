@@ -68,7 +68,7 @@ class Game extends React.Component {
 
   newStartingConditions() {
     const player = Math.random() >= .5 ? "BLUE" : "RED";
-    console.log('THE PLAYER IS:' + player);
+    // console.log('THE PLAYER IS:' + player);
     const redLeft = player === "BLUE" ? 8 : 9;
     const blueLeft = player === "BLUE" ? 9 : 8;
 
@@ -155,7 +155,11 @@ class Game extends React.Component {
       <div className="game">
         <Prompt player={player} gameOver={gameOver} />
         <Scoreline redLeft={redLeft} blueLeft={blueLeft} />
-        <Board key={uniqueId()} onRef={ref => (this.board = ref)} player={player} isSpymaster={isSpymaster} handleSelection={this.handleSelection} />
+        <Board
+          onRef={ref => (this.board = ref)}
+          player={player}
+          isSpymaster={isSpymaster}
+          handleSelection={this.handleSelection} />
         <div className="buttons-div">
           <button onClick={this.spymasterToggle}>{spymasterButtonText}</button>
           {endTurnButton}
