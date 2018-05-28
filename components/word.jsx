@@ -12,14 +12,17 @@ class Word extends React.Component {
   }
 
   componentDidMount() {
-    // const path = "lobbies" + this.props.location.pathname + "/board/" + this.props.index;
-    // const cardRef = fire.database().ref(path);
-    // cardRef.on('value', (snapshot) => {
-    //   this.setState({
-    //     selected: snapshot.val().selected,
-    //     word: snapshot.val().word
-    //   });
-    // });
+    // const card = document.querySelector(`card-${this.props.index}`);
+    // debugger;
+    // console.log(card.width);
+    // const refWidth = card.clientWidth;
+    // const refFontSize = parseFloat(window.getComputedStyle(card, null).getPropertyValue("font-size"));
+    //
+    // debugger;
+    //
+    // if (refFontSize > refWidth) {
+    //   card.style.fontSize = refFontSize * refWidth / card.clientWidth + "px";
+    // }
   }
 
   selectCard() {
@@ -40,7 +43,7 @@ class Word extends React.Component {
     const code = {0: 'blue', 1: 'red', 2: 'beige', 3: 'black'};
     let className;
     if (this.state.selected) {
-      className = code[this.props.cardType];
+      className = code[this.props.cardType] + " " + this.props.className;
       if (this.props.word === "fountain" && this.props.index === 0) {
         // console.log(this.state.selected);
       }
@@ -59,7 +62,7 @@ class Word extends React.Component {
 
     return (
       <li className={className} onClick={this.selectCard}>
-        <span>
+        <span className="card-span">
           {this.props.word}
         </span>
       </li>

@@ -9956,6 +9956,11 @@ var Homepage = function (_React$Component) {
   }
 
   _createClass(Homepage, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      var createLobbyOpen = document.querySelector('.form-create-lobby');
+    }
+  }, {
     key: 'handleChange',
     value: function handleChange(e) {
       this.setState({ value: e.target.value });
@@ -10018,7 +10023,7 @@ var Homepage = function (_React$Component) {
         ),
         _react2.default.createElement(
           'form',
-          { onSubmit: this.handleSubmit },
+          { className: 'form-create-lobby', onSubmit: this.handleSubmit },
           _react2.default.createElement('input', { type: 'text', value: this.state.value, onChange: this.handleChange }),
           _react2.default.createElement('input', { type: 'submit', value: 'Create Room' })
         )
@@ -33484,7 +33489,7 @@ var Board = function (_React$Component) {
 
       var allWords = {};
 
-      var dictionary = ['alamo', 'beagles', 'cyan', 'delta', 'elephant', 'fountain', 'ghoul', 'hipster', 'illegitimate', 'junction', 'Klingon', 'lemon', 'Madagascar', 'novice', 'operation', 'prinicpal', 'query', 'rewind', 'saturation', 'tents', 'underwater', 'villain', 'water', 'xylaphone', 'yankees'];
+      var dictionary = ['alamo', 'beagles', 'cyan', 'delta', 'elephant', 'fountain', 'ghoul', 'hipster', 'illegitimate', 'junction', 'Klingon', 'lemon', 'Madagascarrrrrrrr', 'novice', 'operation', 'prinicpal', 'query', 'rewind', 'saturation', 'tents', 'underwater', 'villain', 'water', 'xylaphone', 'yankees'];
 
       var dictionaryObj = dictionary.reduce(function (acc, cur) {
         acc[cur] = true;
@@ -33502,6 +33507,7 @@ var Board = function (_React$Component) {
           board[i] = { word: word, selected: false, cardType: wordStatuses[i] };
           wordList.push(_react2.default.createElement(_word2.default, {
             key: (0, _util.uniqueId2)(),
+            className: "card-" + i,
             index: i,
             word: word,
             cardType: wordStatuses[i],
@@ -33616,14 +33622,17 @@ var Word = function (_React$Component) {
   _createClass(Word, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      // const path = "lobbies" + this.props.location.pathname + "/board/" + this.props.index;
-      // const cardRef = fire.database().ref(path);
-      // cardRef.on('value', (snapshot) => {
-      //   this.setState({
-      //     selected: snapshot.val().selected,
-      //     word: snapshot.val().word
-      //   });
-      // });
+      // const card = document.querySelector(`card-${this.props.index}`);
+      // debugger;
+      // console.log(card.width);
+      // const refWidth = card.clientWidth;
+      // const refFontSize = parseFloat(window.getComputedStyle(card, null).getPropertyValue("font-size"));
+      //
+      // debugger;
+      //
+      // if (refFontSize > refWidth) {
+      //   card.style.fontSize = refFontSize * refWidth / card.clientWidth + "px";
+      // }
     }
   }, {
     key: 'selectCard',
@@ -33646,7 +33655,7 @@ var Word = function (_React$Component) {
       var code = { 0: 'blue', 1: 'red', 2: 'beige', 3: 'black' };
       var className = void 0;
       if (this.state.selected) {
-        className = code[this.props.cardType];
+        className = code[this.props.cardType] + " " + this.props.className;
         if (this.props.word === "fountain" && this.props.index === 0) {
           // console.log(this.state.selected);
         }
@@ -33666,7 +33675,7 @@ var Word = function (_React$Component) {
         { className: className, onClick: this.selectCard },
         _react2.default.createElement(
           'span',
-          null,
+          { className: 'card-span' },
           this.props.word
         )
       );

@@ -129,7 +129,7 @@ class Board extends React.Component {
     const dictionary = [
       'alamo', 'beagles', 'cyan', 'delta', 'elephant', 'fountain',
       'ghoul', 'hipster', 'illegitimate', 'junction', 'Klingon',
-      'lemon', 'Madagascar', 'novice', 'operation', 'prinicpal',
+      'lemon', 'Madagascarrrrrrrr', 'novice', 'operation', 'prinicpal',
       'query', 'rewind', 'saturation', 'tents', 'underwater',
       'villain', 'water', 'xylaphone', 'yankees'
     ];
@@ -151,6 +151,7 @@ class Board extends React.Component {
         wordList.push(
           <Word
             key={uniqueId2()}
+            className={"card-" + i}
             index={i}
             word={word}
             cardType={wordStatuses[i]}

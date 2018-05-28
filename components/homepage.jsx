@@ -17,6 +17,11 @@ class Homepage extends React.Component {
     };
   }
 
+  componentDidMount() {
+    const createLobbyOpen = document.querySelector('.form-create-lobby');
+  }
+
+
   handleChange(e) {
     this.setState({ value: e.target.value });
   }
@@ -50,7 +55,7 @@ class Homepage extends React.Component {
         <p className='random-room-p' onClick={this.randomRoom}>I don't need a dedicated lobby, just give me a room!</p>
         <p>I have a room already! (note you can just navigate to your URL extension)</p>
         <p>I'll make a new room for myself!</p>
-        <form onSubmit={this.handleSubmit}>
+        <form className='form-create-lobby' onSubmit={this.handleSubmit}>
           <input type="text" value={this.state.value} onChange={this.handleChange} />
           <input type="submit" value="Create Room" />
         </form>

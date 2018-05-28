@@ -1,3 +1,7 @@
+#main {
+  width: 100%;
+}
+
 ul {
   padding-left: 0;
   margin: auto auto;
@@ -30,14 +34,14 @@ span {
   /*background-color: white;*/
   width: 80%;
   text-align: center;
-  padding: 5px 15px 5px 15px;
+  padding: 5px 5px 5px 5px;
   /*border: 1px solid white;*/
   /*border-radius: 5px 5px 5px 5px;*/
   font-size: 20px;
 }
 
 li > span {
-  font-size: 1.15vw;
+  /*font-size:calc(12px + 1.00vw);*/
   /*padding: 5% 10% 5% 10%;*/
 }
 
@@ -105,6 +109,14 @@ li > span {
   border-radius: 5px;
 }
 
+.card-span {
+  font-size: 20px;
+}
+
+.form-create-lobby {
+
+}
+
 .game {
   margin: auto auto;
   max-width: 800px;
@@ -113,11 +125,16 @@ li > span {
   height: 700px;
 }
 
-@media only screen and (max-width: 1000px) {
+@media only screen and (max-width: 1035px) {
   .game {
+    margin: auto auto;
     width: 80%;
-    padding: 5% 0 5% 0;
-    margin: .5%;
+    /*padding: 5% 0 5% 0;
+    margin: .5%;*/
+  }
+
+  .game > div {
+    text-align: center;
   }
 }
 
@@ -131,8 +148,31 @@ li > span {
 }
 
 .homepage-div {
-  max-width: 800px;
+  /*max-width: 800px;*/
   margin: 0 auto;
+}
+
+.homepage-div > form {
+  /*display: flex;*/
+  /*color: red;*/
+  /*justify-content: center;*/
+  text-align: center;
+}
+
+.homepage-div > form > input {
+  /*margin: auto;*/
+}
+
+.hompeage-div > form > button {
+  /*margin: auto;*/
+}
+
+.homepage-div > h3 {
+  text-align: center;
+}
+
+.homepage-div > p {
+  text-align: center;
 }
 
 .new-word-input {
@@ -148,6 +188,10 @@ li > span {
 
 .prompt {
   font-size: 18px;
+}
+
+.random-room-p {
+  cursor: pointer;
 }
 
 .red {
