@@ -1,5 +1,7 @@
 # Codenames
 --------------------
+[Live](http://paulangland.info/codenames/#/recruiters_paradise)
+
 The goal is to create an online implementation of the Codenames board game that allows users to create their own lobbies and implement their own custom word lists.
 
 ## Implementation ##
@@ -23,7 +25,7 @@ This implementation allows users to establish permanent lobbies for themselves a
 
 ## To Do ##
 
-The application is nearly ready to be hosted. I still need to address:
+A simple version of the application is hosted. Important additional features:
 
 - Authentication for permanent lobbies
 - Cleaning up my homepage
