@@ -33494,7 +33494,7 @@ var Board = function (_React$Component) {
 
       var allWords = {};
 
-      var dictionary = ['alamo', 'beagles', 'cyan', 'delta', 'elephant', 'fountain', 'ghoul', 'hipster', 'illegitimate', 'junction', 'Klingon', 'lemon', 'Madagascar', 'novice', 'operation', 'prinicpal', 'query', 'rewind', 'saturation', 'tents', 'underwater', 'villain', 'water', 'xylaphone', 'yankees'];
+      var dictionary = ['ALAMO', 'BEAGLES', 'CYAN', 'DELTA', 'ELEPHANT', 'FOUNTAIN', 'GHOUL', 'HIPSTER', 'ILLEGITIMATE', 'JUNCTION', 'KLINGON', 'LEMON', 'MADAGASCAR', 'NOVICE', 'OPERATION', 'PRINCIPAL', 'QUERY', 'REWIND', 'SATURATION', 'TENTS', 'UNDERWATER', 'VILLIAN', 'WATER', 'XYLAPHONE', 'YANKEES'];
 
       var dictionaryObj = dictionary.reduce(function (acc, cur) {
         acc[cur] = true;

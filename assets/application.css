@@ -6,6 +6,10 @@ body {
   font-style: sans-serif;
 }
 
+button {
+  cursor: pointer;
+}
+
 ul {
   padding-left: 0;
   margin: auto auto;
@@ -25,6 +29,7 @@ li {
   margin: .5%;
   text-align: center;
   background-color: beige;
+  cursor: pointer;
   /*border-radius: 5px 5px 5px 5px;*/
   /*height: 20%;*/
   /*padding: 5% 10% 5% 10%;*/
@@ -58,7 +63,7 @@ li > span {
 
 .beige-visible {
   color: purple;
-  font-weight: bold;
+  /*font-weight: bold;*/
 }
 
 .black {
@@ -69,7 +74,7 @@ li > span {
 
 .black-visible {
   color: black;
-  font-weight: bold;
+  /*font-weight: bold;*/
 }
 
 .blue {
@@ -88,7 +93,7 @@ li > span {
 .blue-visible {
   /*background-color: beige;*/
   color: blue;
-  font-weight: bold;
+  /*font-weight: bold;*/
 }
 
 .board {
@@ -227,7 +232,7 @@ li > span {
 
 .red-visible {
   color: red;
-  font-weight: bold;
+  /*font-weight: bold;*/
 }
 
 /*@media only screen and (max-width: 800px) {

@@ -127,11 +127,11 @@ class Board extends React.Component {
     const allWords = {};
 
     const dictionary = [
-      'alamo', 'beagles', 'cyan', 'delta', 'elephant', 'fountain',
-      'ghoul', 'hipster', 'illegitimate', 'junction', 'Klingon',
-      'lemon', 'Madagascar', 'novice', 'operation', 'prinicpal',
-      'query', 'rewind', 'saturation', 'tents', 'underwater',
-      'villain', 'water', 'xylaphone', 'yankees'
+      'ALAMO', 'BEAGLES', 'CYAN', 'DELTA', 'ELEPHANT', 'FOUNTAIN',
+      'GHOUL', 'HIPSTER', 'ILLEGITIMATE', 'JUNCTION', 'KLINGON',
+      'LEMON', 'MADAGASCAR', 'NOVICE', 'OPERATION', 'PRINCIPAL',
+      'QUERY', 'REWIND', 'SATURATION', 'TENTS', 'UNDERWATER',
+      'VILLIAN', 'WATER', 'XYLAPHONE', 'YANKEES'
     ];
 
     const dictionaryObj = dictionary.reduce((acc, cur) => {
