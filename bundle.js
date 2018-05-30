@@ -9884,6 +9884,10 @@ var _game = __webpack_require__(87);
 
 var _game2 = _interopRequireDefault(_game);
 
+var _header = __webpack_require__(103);
+
+var _header2 = _interopRequireDefault(_header);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // import Classroom from './frontend/classroom';
@@ -9893,6 +9897,7 @@ var App = function App() {
   return _react2.default.createElement(
     'div',
     null,
+    _react2.default.createElement(_reactRouterDom.Route, { path: '/', component: _header2.default }),
     _react2.default.createElement(
       _reactRouterDom.Switch,
       null,
@@ -9928,6 +9933,10 @@ var _firebase2 = _interopRequireDefault(_firebase);
 var _reactRouterDom = __webpack_require__(5);
 
 var _util = __webpack_require__(27);
+
+var _existing_lobby_form = __webpack_require__(102);
+
+var _existing_lobby_form2 = _interopRequireDefault(_existing_lobby_form);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -9997,11 +10006,6 @@ var Homepage = function (_React$Component) {
         'div',
         { className: 'homepage-div' },
         _react2.default.createElement(
-          'h3',
-          null,
-          'CODENAMES [BETA]'
-        ),
-        _react2.default.createElement(
           'p',
           null,
           'This site allows you to reserve a permanent lobby and add your own words to the game.'
@@ -10014,8 +10018,9 @@ var Homepage = function (_React$Component) {
         _react2.default.createElement(
           'p',
           null,
-          'I have a room already! (note you can just navigate to your URL extension)'
+          'Navigate to an existing room (you can just add lobby name to url)'
         ),
+        _react2.default.createElement(_existing_lobby_form2.default, null),
         _react2.default.createElement(
           'p',
           null,
@@ -33489,7 +33494,7 @@ var Board = function (_React$Component) {
 
       var allWords = {};
 
-      var dictionary = ['alamo', 'beagles', 'cyan', 'delta', 'elephant', 'fountain', 'ghoul', 'hipster', 'illegitimate', 'junction', 'Klingon', 'lemon', 'Madagascarrrrrrrr', 'novice', 'operation', 'prinicpal', 'query', 'rewind', 'saturation', 'tents', 'underwater', 'villain', 'water', 'xylaphone', 'yankees'];
+      var dictionary = ['alamo', 'beagles', 'cyan', 'delta', 'elephant', 'fountain', 'ghoul', 'hipster', 'illegitimate', 'junction', 'Klingon', 'lemon', 'Madagascar', 'novice', 'operation', 'prinicpal', 'query', 'rewind', 'saturation', 'tents', 'underwater', 'villain', 'water', 'xylaphone', 'yankees'];
 
       var dictionaryObj = dictionary.reduce(function (acc, cur) {
         acc[cur] = true;
@@ -51114,6 +51119,134 @@ function camelize(string) {
 }
 
 module.exports = camelize;
+
+/***/ }),
+/* 102 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRouterDom = __webpack_require__(5);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var ExistingLobbyForm = function (_React$Component) {
+  _inherits(ExistingLobbyForm, _React$Component);
+
+  function ExistingLobbyForm() {
+    _classCallCheck(this, ExistingLobbyForm);
+
+    var _this = _possibleConstructorReturn(this, (ExistingLobbyForm.__proto__ || Object.getPrototypeOf(ExistingLobbyForm)).call(this));
+
+    _this.handleChange = _this.handleChange.bind(_this);
+    _this.handleSubmit = _this.handleSubmit.bind(_this);
+
+    _this.state = {
+      value: ""
+    };
+    return _this;
+  }
+
+  _createClass(ExistingLobbyForm, [{
+    key: 'handleChange',
+    value: function handleChange(e) {
+      this.setState({ value: e.target.value });
+    }
+  }, {
+    key: 'handleSubmit',
+    value: function handleSubmit(e) {
+      e.preventDefault();
+      var path = '/' + this.state.value;
+      this.props.history.push(path);
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'form',
+        { className: 'form-create-lobby', onSubmit: this.handleSubmit },
+        _react2.default.createElement('input', {
+          type: 'text',
+          pattern: '[A-Za-z]+',
+          title: 'Please only use letters',
+          value: this.state.value,
+          onChange: this.handleChange }),
+        _react2.default.createElement('input', { type: 'submit', value: 'Enter Lobby' })
+      );
+    }
+  }]);
+
+  return ExistingLobbyForm;
+}(_react2.default.Component);
+
+exports.default = (0, _reactRouterDom.withRouter)(ExistingLobbyForm);
+
+/***/ }),
+/* 103 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Header = function (_React$Component) {
+  _inherits(Header, _React$Component);
+
+  function Header() {
+    _classCallCheck(this, Header);
+
+    return _possibleConstructorReturn(this, (Header.__proto__ || Object.getPrototypeOf(Header)).apply(this, arguments));
+  }
+
+  _createClass(Header, [{
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'h3',
+        { className: 'header' },
+        'Codenames [beta]'
+      );
+    }
+  }]);
+
+  return Header;
+}(_react2.default.Component);
+
+exports.default = Header;
 
 /***/ })
 /******/ ]);

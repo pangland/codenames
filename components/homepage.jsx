@@ -3,6 +3,7 @@ import fire from '../firebase';
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
 import { uniqueId } from './util.js';
+import ExistingLobbyForm from './existing_lobby_form';
 
 class Homepage extends React.Component {
   constructor(props) {
@@ -50,10 +51,10 @@ class Homepage extends React.Component {
   render() {
     return (
       <div className="homepage-div">
-        <h3>CODENAMES [BETA]</h3>
         <p>This site allows you to reserve a permanent lobby and add your own words to the game.</p>
         <p className='random-room-p' onClick={this.randomRoom}>I don't need a dedicated lobby, just give me a room!</p>
-        <p>I have a room already! (note you can just navigate to your URL extension)</p>
+        <p>Navigate to an existing room (you can just add lobby name to url)</p>
+        <ExistingLobbyForm />
         <p>I'll make a new room for myself!</p>
         <form className='form-create-lobby' onSubmit={this.handleSubmit}>
           <input type="text" value={this.state.value} onChange={this.handleChange} />

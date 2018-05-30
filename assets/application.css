@@ -2,6 +2,10 @@
   width: 100%;
 }
 
+body {
+  font-style: sans-serif;
+}
+
 ul {
   padding-left: 0;
   margin: auto auto;
@@ -136,12 +140,24 @@ li > span {
   .game > div {
     text-align: center;
   }
+
+  .card-span {
+    font-size:calc(6.0275px + 1.35vw);
+  }
 }
 
 .game > div {
   text-align: center;
 }
 
+.header {
+  font-size: 48px;
+  padding: 0 0 0 0;
+  margin: 0 0 0 0;
+  margin-bottom: 10px;
+  font-weight: normal;
+  text-align: center;
+}
 
 .hidden {
   color: transparent;
@@ -192,6 +208,8 @@ li > span {
 
 .random-room-p {
   cursor: pointer;
+  color: blue;
+  text-decoration: underline;
 }
 
 .red {

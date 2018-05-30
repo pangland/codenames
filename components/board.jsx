@@ -129,7 +129,7 @@ class Board extends React.Component {
     const dictionary = [
       'alamo', 'beagles', 'cyan', 'delta', 'elephant', 'fountain',
       'ghoul', 'hipster', 'illegitimate', 'junction', 'Klingon',
-      'lemon', 'Madagascarrrrrrrr', 'novice', 'operation', 'prinicpal',
+      'lemon', 'Madagascar', 'novice', 'operation', 'prinicpal',
       'query', 'rewind', 'saturation', 'tents', 'underwater',
       'villain', 'water', 'xylaphone', 'yankees'
     ];
